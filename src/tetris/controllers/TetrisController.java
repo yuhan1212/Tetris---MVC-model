@@ -1,4 +1,4 @@
-package tetris.controller;
+package tetris.controllers;
 
 public interface TetrisController {
 }
