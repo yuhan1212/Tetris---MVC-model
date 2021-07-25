@@ -21,7 +21,7 @@ public class Piece {
      * This method sets the coordinate to x at the given index.
      *
      * @param index where the x should be set
-     * @param x the x coordinate
+     * @param x     the x coordinate
      */
     private void setX(int index, int x) {
 
@@ -31,7 +31,7 @@ public class Piece {
      * This method sets the coordinate to y at the given index.
      *
      * @param index where the y should be set
-     * @param y the y coordinate
+     * @param y     the y coordinate
      */
     private void setY(int index, int y) {
 
@@ -94,7 +94,37 @@ public class Piece {
      *
      * @return a new piece that is rotated left
      */
-    private Piece rotateLeft() {
+    public Piece rotateLeft() {
 
     }
+
+
+    // Waiting for discussing (removeFullLines / tryMove / moveLeft / moveRight / rotateLeft / rotateRight)
+
+    private void removeFullLines() {
+    }
+
+    private boolean tryMove(Piece newPiece, int newX, int newY) {
+        return true;
+    }
+
+    public Piece moveLeft() {
+        //tryMove(currentPiece, currentX - 1, currentY);
+    }
+    public Piece moveRight() {
+        //tryMove(currentPiece, currentX + 1, currentY);
+    }
+
+    public Piece rotateRight() {
+        //tryMove(currentPiece.rotateRight(), currentX, currentY);
+    }
+
+    public Piece dropDown() {
+        //tryMove(currentPiece.rotateRight(), currentX, currentY);
+    }
+
+    public Piece oneLineDown() {
+        //tryMove(currentPiece.rotateRight(), currentX, currentY);
+    }
+}
 
