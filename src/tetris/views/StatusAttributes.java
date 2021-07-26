@@ -2,8 +2,8 @@ package tetris.views;
 
 public class StatusAttributes {
 
-    private int score;
-    private double level;
+    private double score;
+    private int level;
     private int removedLines;
     private boolean isPaused = false;
 
@@ -31,26 +31,27 @@ public class StatusAttributes {
         return this.score;
     }
 
-    public String toString() {
+    public String fitLabel() {
         String res = "";
-        res += "Tetris Status: ";
+        res += "<html>Status: ";
         if (isPaused) {
-            res += "Paused\n";
-        } else { res += "Ongoing\n";
+            res += "Paused, press 's' to start<br />";
+        } else { res += "<html>Started, press 'p' to pause<br />";
         }
-        res += String.format("Score: %f\n", score);
-        res += String.format("Level: %d\n", level);
-        res += String.format("Lined: %d", removedLines);
+        res += String.format("Score: %.2f<br />", score);
+        res += String.format("Level: %d<br />", level);
+        res += String.format("Lines: %d</html>", removedLines);
 
         return res;
     }
 
     public String gameResult() {
         String res = "";
-        res += String.format("Score: %f\n", score);
-        res += String.format("Level: %d\n", level);
-        res += String.format("Lined: %d", removedLines);
+        res += String.format("<html>Score: %f<br />", score);
+        res += String.format("Level: %d<br />", level);
+        res += String.format("Lined: %d</html>", removedLines);
 
         return res;
     }
+
 }

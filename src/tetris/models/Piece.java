@@ -44,7 +44,7 @@ public class Piece {
      * @return the x coordinate
      */
     private int getX(int index) {
-
+        return 0;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Piece {
      * @return the y coordinate
      */
     private int getY(int index) {
-
+        return 0;
     }
 
     /**
@@ -63,6 +63,7 @@ public class Piece {
      * @return the current tetrominoe piece
      */
     private Piece getPiece() {
+        return new Piece();
     }
 
     /**
@@ -77,7 +78,7 @@ public class Piece {
      * @return the smallest x coordinate
      */
     private int minX() {
-
+        return 0;
     }
 
     /**
@@ -86,7 +87,7 @@ public class Piece {
      * @return the smallest y coordinate
      */
     private int minY() {
-
+        return 0;
     }
 
     /**
@@ -95,13 +96,21 @@ public class Piece {
      * @return a new piece that is rotated left
      */
     public Piece rotateLeft() {
-
+        return new Piece();
     }
 
 
     // Waiting for discussing (removeFullLines / tryMove / moveLeft / moveRight / rotateLeft / rotateRight)
 
-    private void removeFullLines() {
+    public void removeFullLines() {
+    }
+
+    public void add(Piece other) {
+
+    }
+
+    public boolean isFallingFinished() {
+        return false;
     }
 
     private boolean tryMove(Piece newPiece, int newX, int newY) {
@@ -110,21 +119,29 @@ public class Piece {
 
     public Piece moveLeft() {
         //tryMove(currentPiece, currentX - 1, currentY);
+        return new Piece();
     }
     public Piece moveRight() {
         //tryMove(currentPiece, currentX + 1, currentY);
+        return new Piece();
     }
 
     public Piece rotateRight() {
         //tryMove(currentPiece.rotateRight(), currentX, currentY);
+        return new Piece();
     }
 
     public Piece dropDown() {
         //tryMove(currentPiece.rotateRight(), currentX, currentY);
+        return new Piece();
     }
 
     public Piece oneLineDown() {
         //tryMove(currentPiece.rotateRight(), currentX, currentY);
+        return new Piece();
     }
+
+
+
 }
 

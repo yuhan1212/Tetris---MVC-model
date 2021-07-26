@@ -1,7 +1,9 @@
 package tetris.controllers;
 
 import tetris.models.Piece;
+import tetris.views.Frame;
 import tetris.views.Board;
+
 import tetris.views.StatusAttributes;
 
 import java.awt.*;
@@ -23,9 +25,9 @@ public class Controller {
     /**
      * Related to Tetris views
      */
-    private Frame frame = new tetris.views.Frame();
-    private Board board = new Board();
-    private StatusAttributes statusAttributes = new StatusAttributes();
+    private Frame frame;
+    private Board board;
+    private StatusAttributes statusAttributes;
     private JLabel statusBar;
 
     /**
@@ -41,17 +43,19 @@ public class Controller {
      * If we call Controller, the game will start (init board)
      */
     public Controller() {
-        frame.setLayout(new BorderLayout());
-        statusBar = new JLabel(statusAttributes.toString());
-        frame.add(statusBar, BorderLayout.SOUTH);
-        frame.add(board, BorderLayout.CENTER);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setResizable(false);
-
-
         keyBoardHandler = new KeyBoardHandler(this);
-        timer = new Timer(400, keyBoardHandler);
+        frame = new Frame(keyBoardHandler);
+        timer = new Timer(400, board);
+
+        Color[][] colors = new Color[20][10];
+        for (int r = 0; r < 20; r++) {
+            for (int c = 0; c < 10; c++) {
+                if (r == c) colors[r][c] = Color.CYAN;
+                else if (r - 2 == c) colors[r][c] = Color.BLUE;
+                else colors[r][c] = Color.RED;
+            }
+        }
+        frame.updateBoard(colors);
     }
 
     public boolean isPaused() {
@@ -75,22 +79,31 @@ public class Controller {
     }
 
     public void gameAction() {
-        if (isFallingFinished) {
-            isFallingFinished = false;
-            newPiece();
-        } else {
-            oneLineDown();
-        }
+//        if (currentPiece.isFallingFinished) {
+//            settledPieces.add(currentPiece);
+//            settledPieces.removeFullLines();
+//            currentPiece = new Piece();
+//
+//        } else {
+//            currentPiece.oneLineDown();
+//        }
     }
+//
+//
+//
+//    public void playGame() {
+//        while (!isPaused() || !is) {
+//            if (currentPiece != null) {
+//                currentPiece.oneLineDown();
+//            }
+//        }
+//    }
 
-
-
-    public void playGame() {
-        if (isPaused()) return;
+    public static void main(String[] args) {
+        Controller c = new Controller();
 
 
     }
-
 
 
 }

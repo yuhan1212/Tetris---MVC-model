@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyBoardHandler implements KeyListener, ActionListener {
+public class KeyBoardHandler implements KeyListener {
 
     private Controller controller;
 
@@ -68,8 +68,4 @@ public class KeyBoardHandler implements KeyListener, ActionListener {
         // do nothing
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // do nothing
-    }
 }
