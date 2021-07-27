@@ -16,6 +16,8 @@ public class Board extends JPanel {
     private final int BOARDHEIGHT = 600;
     private final int ROWS = 20;
     private final int COLS = 10;
+    private final int BoardBoarder = 10;
+    private final int gridLength = 30;
     private final Color BOARDCOLOR = Color.BLACK;
     private boolean isGameOver = false;
     private boolean isPaused = true;
@@ -26,7 +28,7 @@ public class Board extends JPanel {
     public Board() {
         // make the panel focusable so that it can react to keyboard inputs
         setFocusable(true);
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setBorder(BorderFactory.createEmptyBorder(BoardBoarder, BoardBoarder, BoardBoarder, BoardBoarder));
         setPreferredSize(new Dimension(BOARDWIDTH, BOARDHEIGHT));
         setLayout(new GridLayout(ROWS, COLS));
         setBackground(BOARDCOLOR);
@@ -65,7 +67,7 @@ public class Board extends JPanel {
             for (int r = 0; r < ROWS; r++) {
                 for (int c = 0; c < COLS; c++) {
                     g.setColor(colors[r][c]);
-                    g.fillRect(c * 30, r * 30, 30, 30);
+                    g.fillRect(c * gridLength, r * gridLength, gridLength, gridLength);
                 }
             }
         }

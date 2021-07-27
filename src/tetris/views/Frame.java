@@ -7,6 +7,7 @@ import java.awt.*;
 public class Frame extends JFrame{
     private final int frameWidth = 300;
     private final int frameHeight = 700;
+    private final int StatusBarBoarder = 10;
     private final String gameName = "Rainbow Tetris";
     private Board board;
     private StatusAttributes statusAttributes;
@@ -21,7 +22,7 @@ public class Frame extends JFrame{
         board = new Board();
         board.addKeyListener(keyBoardHandler);
         statusBar = new JLabel();
-        statusBar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        statusBar.setBorder(BorderFactory.createEmptyBorder(StatusBarBoarder, StatusBarBoarder, StatusBarBoarder, StatusBarBoarder));
         statusAttributes = new StatusAttributes();
         String status = statusAttributes.fitLabel();
         statusBar.setText(status);
