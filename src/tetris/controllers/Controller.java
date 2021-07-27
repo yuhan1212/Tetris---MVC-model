@@ -27,12 +27,12 @@ public class Controller implements ActionListener {
     private Color[][] curBoard;
     private Color[][] curPiece;
     private boolean isGameOver = false;
-    private boolean isFallingFinished = false;
 
     /**
      * Related to Tetris views
      */
     private final double LevelRate = 0.5;
+    private final int scoreToLevel = 10;
     private Frame frame;
     private double score = 0;
     private int level = 1;
@@ -57,6 +57,20 @@ public class Controller implements ActionListener {
         timer = new Timer(400, this);
     }
 
+    public void pause() {
+        this.isPaused = true;
+        timer.stop();
+    }
+
+    public void start() {
+        this.isPaused = false;
+        timer.start();
+    }
+
+    public boolean isPaused() {
+        return this.isPaused;
+    }
+
     public void updateView() {
         this.frame.update(this.isGameOver,
                 this.isPaused,
@@ -64,11 +78,13 @@ public class Controller implements ActionListener {
                 this.score,
                 this.level,
                 this.removedLines);
-
     }
 
-    public void updateScore() {
-
+    public void updateRecord() {
+        int AddRemoveLine = this.curBoard.countFullLine();
+        this.removedLines += AddRemoveLine;
+        this.score = AddRemoveLine * (1 + this.level * this.LevelRate);
+        this.level = (int) this.score / this.scoreToLevel;
     }
 
     @Override
@@ -76,19 +92,7 @@ public class Controller implements ActionListener {
         gameAction();
     }
 
-    public boolean isPaused() {
-        return isPaused;
-    }
 
-    public void pause() {
-        isPaused = true;
-        timer.stop();
-    }
-
-    public void start() {
-        isPaused = false;
-        timer.start();
-    }
 
     public void gameAction() {
 //        if (currentPiece.isFallingFinished) {
@@ -114,19 +118,6 @@ public class Controller implements ActionListener {
     public static void main(String[] args) {
         Controller c = new Controller();
         c.updateView();
-//
-//        Color[][] colors = new Color[20][10];
-//        colors[19][9] = Color.YELLOW;
-//        c.updateView();
-//
-//        colors[19][7] = Color.YELLOW;
-//        c.updateView();
-//
-//        colors[19][8] = Color.BLUE;
-//        c.updateView();
-
-
-
     }
 
 
