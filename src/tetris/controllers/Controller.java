@@ -21,11 +21,8 @@ public class Controller implements ActionListener {
     /**
      * Related to Tetris models
      */
-    public Piece currentPiece;
-    public Piece[] settledPieces;
-
     private Color[][] curBoard;
-    private Color[][] curPiece;
+    private Game game;
     private boolean isGameOver = false;
 
     /**
@@ -54,6 +51,8 @@ public class Controller implements ActionListener {
     public Controller() {
         keyBoardHandler = new KeyBoardHandler(this);
         frame = new Frame(keyBoardHandler);
+        game =
+
         timer = new Timer(400, this);
     }
 

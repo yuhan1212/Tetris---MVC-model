@@ -30,25 +30,20 @@ public class KeyBoardHandler implements KeyListener {
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
-                    controller.currentPiece = controller.currentPiece.moveLeft();
+                    game.moveLeft();
+                    cur_board = game.getColors();
                     break;
                 case KeyEvent.VK_RIGHT:
                     controller.currentPiece = controller.currentPiece.moveRight();
                     break;
                 case KeyEvent.VK_DOWN:
-                    controller.currentPiece = controller.currentPiece.rotateRight();
+                    controller.currentPiece = controller.currentPiece.oneLineDown();
                     break;
                 case KeyEvent.VK_UP:
                     controller.currentPiece = controller.currentPiece.rotateLeft();
                     break;
                 case KeyEvent.VK_SPACE:
                     controller.currentPiece = controller.currentPiece.dropDown();
-                    break;
-                case 'd':
-                    controller.currentPiece = controller.currentPiece.oneLineDown();
-                    break;
-                case 'D':
-                    controller.currentPiece = controller.currentPiece.oneLineDown();
                     break;
             }
         }
