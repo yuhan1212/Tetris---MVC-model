@@ -2,55 +2,50 @@ package tetris.views;
 
 public class StatusAttributes {
 
-    private int score;
-    private double level;
+    private double score;
+    private int level;
     private int removedLines;
-    private boolean isPaused = false;
+    private boolean isPaused = true;
+    private boolean isGameOver = false;
 
     public StatusAttributes() {
-        score = 0;
-        level = 1;
-        removedLines = 0;
     }
 
-    public StatusAttributes(int score, double level, int removedLines) {
-        score = score;
-        level = level;
-        removedLines = removedLines;
+    public void setGameOver(boolean isGameOver) {
+        this.isGameOver = isGameOver;
     }
 
-    public void updateStatusText(int lines) {
-        score += lines * (1 + level * 0.5);
+    public void setPaused(boolean isPaused) {
+        this.isPaused = isPaused;
     }
 
-    public void updateStatusPaused(boolean b) {
-        isPaused = b;
+    public void setRecords(double score, int level, int lines) {
+        this.score = score;
+        this.level = level;
+        this.removedLines = lines;
     }
 
-    public double getScore() {
-        return this.score;
-    }
-
-    public String toString() {
+    public String fitLabel() {
         String res = "";
-        res += "Tetris Status: ";
-        if (isPaused) {
-            res += "Paused\n";
-        } else { res += "Ongoing\n";
+        if (this.isGameOver) {
+            res += String.format("<html>Score: %.2f<br />", this.score);
+            res += String.format("Level: %d<br />", this.level);
+            res += String.format("Lined: %d</html>", this.removedLines);
+            res += "Press 's' to start a new game.";
+            return res;
         }
-        res += String.format("Score: %f\n", score);
-        res += String.format("Level: %d\n", level);
-        res += String.format("Lined: %d", removedLines);
+
+        res += String.format("<html>Score: %.2f<br />", this.score);
+        res += String.format("Level: %d<br />", this.level);
+        res += String.format("Lines: %d<br />", this.removedLines);
+
+        res += "Status: ";
+        if (this.isPaused) {
+            res += "Paused</html>";
+        } else { res += "<html>Started, press 'p' to pause</html>";
+        }
 
         return res;
     }
 
-    public String gameResult() {
-        String res = "";
-        res += String.format("Score: %f\n", score);
-        res += String.format("Level: %d\n", level);
-        res += String.format("Lined: %d", removedLines);
-
-        return res;
-    }
 }
