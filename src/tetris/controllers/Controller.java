@@ -2,40 +2,49 @@ package tetris.controllers;
 
 import tetris.models.Piece;
 import tetris.views.Frame;
-import tetris.views.Board;
+//import tetris.views.Board;
 
 import tetris.views.StatusAttributes;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.*;
 
 
 /**
  * TetrisController will control the game board for Tetris.
  */
-public class Controller {
+public class Controller implements ActionListener {
 
     /**
      * Related to Tetris models
      */
     public Piece currentPiece;
     public Piece[] settledPieces;
-    private Timer timer;
+
+    private Color[][] curBoard;
+    private Color[][] curPiece;
+    private boolean isGameOver = false;
+    private boolean isFallingFinished = false;
 
     /**
      * Related to Tetris views
      */
+    private final double LevelRate = 0.5;
     private Frame frame;
-    private Board board;
-    private StatusAttributes statusAttributes;
-    private JLabel statusBar;
+    private double score = 0;
+    private int level = 1;
+    private int removedLines = 0;
 
     /**
      * Related to user input
      */
     private KeyBoardHandler keyBoardHandler;
-    private boolean isFallingFinished = false;
     private boolean isPaused = true;
+
+    private Timer timer;
 
 
 
@@ -45,17 +54,26 @@ public class Controller {
     public Controller() {
         keyBoardHandler = new KeyBoardHandler(this);
         frame = new Frame(keyBoardHandler);
-        timer = new Timer(400, board);
+        timer = new Timer(400, this);
+    }
 
-        Color[][] colors = new Color[20][10];
-        for (int r = 0; r < 20; r++) {
-            for (int c = 0; c < 10; c++) {
-                if (r == c) colors[r][c] = Color.CYAN;
-                else if (r - 2 == c) colors[r][c] = Color.BLUE;
-                else colors[r][c] = Color.RED;
-            }
-        }
-        frame.updateBoard(colors);
+    public void updateView() {
+        this.frame.update(this.isGameOver,
+                this.isPaused,
+                this.curBoard,
+                this.score,
+                this.level,
+                this.removedLines);
+
+    }
+
+    public void updateScore() {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        gameAction();
     }
 
     public boolean isPaused() {
@@ -65,17 +83,11 @@ public class Controller {
     public void pause() {
         isPaused = true;
         timer.stop();
-        this.statusAttributes.updateStatusPaused(true);
-        this.statusBar.setText(this.statusAttributes.toString());
-        board.repaint();
     }
 
     public void start() {
         isPaused = false;
         timer.start();
-        this.statusAttributes.updateStatusPaused(false);
-        this.statusBar.setText(this.statusAttributes.toString());
-        board.repaint();
     }
 
     public void gameAction() {
@@ -101,6 +113,18 @@ public class Controller {
 
     public static void main(String[] args) {
         Controller c = new Controller();
+        c.updateView();
+//
+//        Color[][] colors = new Color[20][10];
+//        colors[19][9] = Color.YELLOW;
+//        c.updateView();
+//
+//        colors[19][7] = Color.YELLOW;
+//        c.updateView();
+//
+//        colors[19][8] = Color.BLUE;
+//        c.updateView();
+
 
 
     }

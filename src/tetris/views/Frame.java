@@ -33,20 +33,23 @@ public class Frame extends JFrame{
         setResizable(false);
     }
 
-    public void updateJLabel() {
+    public void update(boolean isGameOver,
+                       boolean isPaused,
+                       Color[][] colors,
+                       double score,
+                       int level,
+                       int lines) {
+        this.board.setGameOver(isGameOver);
+        this.statusAttributes.setGameOver(isGameOver);
+        this.board.setPaused(isPaused);
+        this.statusAttributes.setPaused(isPaused);
+        this.board.setColors(colors);
+        this.statusAttributes.setRecords(score, level, lines);
+
         String status = statusAttributes.fitLabel();
         statusBar.setText(status);
-
+        board.paint();
     }
 
-    public void updateBoard(Color[][] colors) {
-
-        board.paint(colors);
-
-    }
-
-    public void gameOver() {
-
-    }
 
 }

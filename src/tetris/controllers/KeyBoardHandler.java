@@ -52,9 +52,6 @@ public class KeyBoardHandler implements KeyListener {
                     break;
             }
         }
-
-
-
     }
 
     @Override

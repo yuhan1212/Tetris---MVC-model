@@ -8,5 +8,4 @@
 //    BLUE,
 //    CYAN,
 //    MAGENTA,
-//    BLACK
 //    }
