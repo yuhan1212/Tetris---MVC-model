@@ -1,5 +1,7 @@
 package tetris.models;
 
+import java.awt.*;
+
 public class Piece {
 
     public enum Shapes {
@@ -9,7 +11,9 @@ public class Piece {
 
     private Shapes shape;
     private int[][] coords;
-    private int[][][] coordsTable;
+    private Color color;
+    private final Color[] colors;
+    private final int[][][] coordsTable;
 
     /**
      * This is the constructor that doesn't take in any parameter
@@ -18,7 +22,16 @@ public class Piece {
     public Piece() {
         // a piece will take up maximum 4*2 rectangle
         coords = new int[4][2];
-        int[][][] coordsTable = new int[][][]{
+        colors = new Color[8];
+        colors[0] = Color.BLACK;
+        colors[1] = Color.RED;
+        colors[2] = Color.ORANGE;
+        colors[3] = Color.YELLOW;
+        colors[4] = Color.GREEN;
+        colors[5] = Color.BLUE;
+        colors[6] = Color.CYAN;
+        colors[7] = Color.MAGENTA;
+        coordsTable = new int[][][]{
                 {{0, 0}, {0, 0}, {0, 0}, {0, 0}}, // NoShape
                 {{0, -1}, {0, 0}, {1, 0}, {1, 1}}, // ZShape
                 {{0, -1}, {0, 0}, {-1, 0}, {-1, 1}}, // SShape
@@ -34,17 +47,19 @@ public class Piece {
     /**
      * This methods set the shape of the non-shaped piece.
      */
-    private void setShape(Shapes shape) {
+    public void setShape(Shapes shape) {
         for (int i = 0; i < 4; i++) {
-            System.arraycopy(coordsTable[shape.ordinal()], 0, coords, 0, 4);
+            System.arraycopy(coordsTable[shape.ordinal()][i], 0, coords[i], 0, 2);
         }
+
         this.shape = shape;
+        this.color = colors[shape.ordinal()];
     }
 
     /**
-     * This method sets the coordinate to x at the given index.
+     * This method sets the x coordinate of a given index.
      *
-     * @param index where the x should be set
+     * @param index where the x coordinate should be set
      * @param x     the x coordinate
      */
     private void setX(int index, int x) {
@@ -52,9 +67,9 @@ public class Piece {
     }
 
     /**
-     * This method sets the coordinate to y at the given index.
+     * This method sets the y coordinate of a given index.
      *
-     * @param index where the y should be set
+     * @param index where the y coordinate should be set
      * @param y     the y coordinate
      */
     private void setY(int index, int y) {
@@ -67,7 +82,7 @@ public class Piece {
      * @param index where to find the x coordinate
      * @return the x coordinate
      */
-    private int getX(int index) {
+    public int getX(int index) {
         return coords[index][0];
     }
 
@@ -77,7 +92,7 @@ public class Piece {
      * @param index where to find the y coordinate
      * @return the y coordinate
      */
-    private int getY(int index) {
+    public int getY(int index) {
         return coords[index][1];
     }
 
@@ -86,7 +101,7 @@ public class Piece {
      *
      * @return the shape (enum)
      */
-    private Shapes getShape() {
+    public Shapes getShape() {
         return shape;
     }
 
@@ -104,10 +119,10 @@ public class Piece {
      *
      * @return the smallest x coordinate
      */
-    private int minX() {
+    public int minX() {
         int min = coords[0][0];
 
-        for (int i=0; i<4; i++) {
+        for (int i = 0; i < 4; i++) {
             min = Math.min(min, coords[i][0]);
         }
 
@@ -119,10 +134,10 @@ public class Piece {
      *
      * @return the smallest y coordinate
      */
-    private int minY() {
+    public int minY() {
         int min = coords[0][1];
 
-        for (int i=0; i<4; i++) {
+        for (int i = 0; i < 4; i++) {
             min = Math.min(min, coords[i][1]);
         }
 
@@ -149,63 +164,7 @@ public class Piece {
         return result;
     }
 
-
-    // Waiting for discussing (removeFullLines / tryMove / moveLeft / moveRight / rotateLeft / rotateRight)
-
-    private void removeFullLines() {
-        int numFullLines = 0;
-
-        // TODO: 叫views or controller -> 需要boardHeight及boardWidth
-        for (int i = views.getBoardHeight() - 1; i >= 0; i--) {
-            boolean lineFull = true;
-
-            for (int j = 0; j < views.getBoardWidth(); j++) {
-                if (shapeAt(j, i) == Shapes.NoShape) {
-                    lineFull = false;
-                    break;
-                }
-            }
-
-            if (lineFull) {
-                numFullLines++;
-                for (int k = i; k < views.getBoardHeight - 1; k++) {
-                    for (int j = 0; j < views.getBoardWidth; j++) {
-                        board[(k * views.getBoardWidth) + j] = shapeAt(j, k + 1);
-                    }
-                }
-            }
-        }
-
-        // TODO: 這些methods都待定
-        if (numFullLines > 0) {
-            numLinesRemoved += numFullLines;
-            statusbar.setText(String.valueOf(numLinesRemoved));
-            isFallingFinished = true;
-            curPiece.setShape(Shapes.NoShape);
-        }
-    }
-
-    private boolean tryMove(Piece newPiece, int newX, int newY) {
-        return true;
-    }
-
-    public Piece moveLeft() {
-        //tryMove(currentPiece, currentX - 1, currentY);
-    }
-    public Piece moveRight() {
-        //tryMove(currentPiece, currentX + 1, currentY);
-    }
-
-    public Piece rotateRight() {
-        //tryMove(currentPiece.rotateRight(), currentX, currentY);
-    }
-
-    public Piece dropDown() {
-        //tryMove(currentPiece.rotateRight(), currentX, currentY);
-    }
-
-    public Piece oneLineDown() {
-        //tryMove(currentPiece.rotateRight(), currentX, currentY);
+    public static void main(String[] args) {
+        Piece piece = new Piece();
     }
 }
-
