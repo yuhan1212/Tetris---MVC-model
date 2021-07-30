@@ -1,16 +1,20 @@
 package tetris.controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyBoardHandler implements KeyListener {
 
-    private Controller controller;
+    private final Controller controller;
+    private final String moveSoundFileName = "move.wav";
+    private final SoundEffect moveSoundEffect;
+    private final String dropSoundFileName = "drop.wav";
+    private final SoundEffect dropSoundEffect;
 
     public KeyBoardHandler(Controller controller) {
         this.controller = controller;
+        this.moveSoundEffect = new SoundEffect(moveSoundFileName);
+        this.dropSoundEffect = new SoundEffect(dropSoundFileName);
     }
 
     @Override
@@ -26,24 +30,28 @@ public class KeyBoardHandler implements KeyListener {
             return;
         }
 
-        if (!controller.isPaused() && controller.currentPiece != null) {
+        if (!controller.isPaused()) {
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
-                    game.moveLeft();
-                    cur_board = game.getColors();
+                    controller.move(Action.LEFT);
+                    this.moveSoundEffect.play();
                     break;
                 case KeyEvent.VK_RIGHT:
-                    controller.currentPiece = controller.currentPiece.moveRight();
+                    controller.move(Action.RIGHT);
+                    this.moveSoundEffect.play();
                     break;
                 case KeyEvent.VK_DOWN:
-                    controller.currentPiece = controller.currentPiece.oneLineDown();
+                    controller.move(Action.DOWNONE);
+                    this.moveSoundEffect.play();
                     break;
                 case KeyEvent.VK_UP:
-                    controller.currentPiece = controller.currentPiece.rotateLeft();
+                    controller.move(Action.ROTATE);
+                    this.moveSoundEffect.play();
                     break;
                 case KeyEvent.VK_SPACE:
-                    controller.currentPiece = controller.currentPiece.dropDown();
+                    controller.move(Action.ALLDOWN);
+                    this.dropSoundEffect.play();
                     break;
             }
         }

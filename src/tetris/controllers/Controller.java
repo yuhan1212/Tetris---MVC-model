@@ -1,15 +1,10 @@
 package tetris.controllers;
 
-import tetris.models.Piece;
+import tetris.models.Game;
 import tetris.views.Frame;
-//import tetris.views.Board;
 
-import tetris.views.StatusAttributes;
-
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 import javax.swing.*;
 
 
@@ -21,9 +16,7 @@ public class Controller implements ActionListener {
     /**
      * Related to Tetris models
      */
-    private Color[][] curBoard;
     private Game game;
-    private boolean isGameOver = false;
 
     /**
      * Related to Tetris views
@@ -33,6 +26,7 @@ public class Controller implements ActionListener {
     private Frame frame;
     private double score = 0;
     private int level = 1;
+    private int old_level = 1;
     private int removedLines = 0;
 
     /**
@@ -41,7 +35,14 @@ public class Controller implements ActionListener {
     private KeyBoardHandler keyBoardHandler;
     private boolean isPaused = true;
 
+    private SoundEffect BGM;
+    private String BGMFileName = "BGM.wav";
+    private String BGMURL = "https://archive.org/details/TetrisThemeMusic";
     private Timer timer;
+    private int timeDelay = 1000;
+    private int startTimeDelay = 1000;
+    private final int levelUpConstant = 100;
+    private final int minTimeDelay = 100;
 
 
 
@@ -51,19 +52,25 @@ public class Controller implements ActionListener {
     public Controller() {
         keyBoardHandler = new KeyBoardHandler(this);
         frame = new Frame(keyBoardHandler);
-        game =
-
-        timer = new Timer(400, this);
+        game = new Game();
+        timer = new Timer(timeDelay, this);
+        BGM = new SoundEffect(BGMFileName);
+//        BGM.play(level);
+        timer.start();
     }
 
     public void pause() {
         this.isPaused = true;
+        updateView();
+//        BGM.stop();
         timer.stop();
     }
 
     public void start() {
         this.isPaused = false;
+        updateView();
         timer.start();
+        BGM.play();
     }
 
     public boolean isPaused() {
@@ -71,52 +78,79 @@ public class Controller implements ActionListener {
     }
 
     public void updateView() {
-        this.frame.update(this.isGameOver,
+        this.frame.update(this.game.isGameOver(),
                 this.isPaused,
-                this.curBoard,
+                this.game.getColors(),
                 this.score,
                 this.level,
                 this.removedLines);
     }
 
     public void updateRecord() {
-        int AddRemoveLine = this.curBoard.countFullLine();
+        int AddRemoveLine = this.game.removeFullLines();
         this.removedLines += AddRemoveLine;
-        this.score = AddRemoveLine * (1 + this.level * this.LevelRate);
-        this.level = (int) this.score / this.scoreToLevel;
+        this.score += AddRemoveLine * (1 + this.level * this.LevelRate);
+        this.level = 1 + this.removedLines / this.scoreToLevel;
+    }
+
+    private boolean isLevelUp() {
+        if (this.level > this.old_level) {
+            this.old_level = this.level;
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        gameAction();
+        // We reach here every time the alarm fires.
+
+        // if not gameOver and not isPaused, we need to call models
+        if (!this.game.isGameOver() && !this.isPaused()) {
+            // if current piece is settled
+            if (this.game.isFallingFinished()) {
+                this.updateRecord(); // remove full line and update records
+                this.game.addPiece(); // new piece start falling
+            }
+            else {
+                // keep move current piece one line down
+                this.move(Action.DOWNONE);
+            }
+        }
+        // keep update view, records and timer
+        updateView();
+        updateRecord();
+        if (this.isLevelUp()) {
+//            BGM.play(this.level);
+        }
+        timer.setDelay(this.updateTimeDelay());
+
     }
 
-
-
-    public void gameAction() {
-//        if (currentPiece.isFallingFinished) {
-//            settledPieces.add(currentPiece);
-//            settledPieces.removeFullLines();
-//            currentPiece = new Piece();
-//
-//        } else {
-//            currentPiece.oneLineDown();
-//        }
+    public void move(Action action) {
+        if (action == Action.LEFT) {
+            game.moveLeft();
+        } else if (action == Action.RIGHT) {
+            game.moveRight();
+        } else if (action == Action.ROTATE) {
+            game.rotateLeft();
+        } else if (action == Action.DOWNONE) {
+            game.oneLineDown();
+        } else if (action == Action.ALLDOWN) {
+            game.dropDown();
+        }
     }
-//
-//
-//
-//    public void playGame() {
-//        while (!isPaused() || !is) {
-//            if (currentPiece != null) {
-//                currentPiece.oneLineDown();
-//            }
-//        }
-//    }
+
+    public int updateTimeDelay() {
+        if (this.timeDelay <= minTimeDelay) {
+            return minTimeDelay;
+        }
+        this.timeDelay = startTimeDelay - levelUpConstant * (this.level - 1);
+        return this.timeDelay;
+    }
 
     public static void main(String[] args) {
         Controller c = new Controller();
-        c.updateView();
     }
 
 
