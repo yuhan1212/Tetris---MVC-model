@@ -1,6 +1,9 @@
 package tetris.models;
 
+import tetris.models.Piece;
+import java.awt.*;
 import java.util.Arrays;
+
 
 public class Game {
 
@@ -12,13 +15,13 @@ public class Game {
     private int currentX = 0;
     private int currentY = 0;
     private Piece currentPiece;
-    private Piece.Shapes[] board;
+    private Color[] board;
 
 
     /**
      * This is the constructor of the game logic, which takes no parameter
      */
-    public void Game() {
+    public Game() {
         currentPiece = new Piece();
         board = new Piece.Shapes[boardWidth*boardHeight];
         clearBoard();
@@ -105,7 +108,7 @@ public class Game {
         for (int i = 0; i < 4; i++) {
             int x = currentX + currentPiece.getX(i);
             int y = currentY - currentPiece.getY(i);
-            board[(y * boardWidth) + x] = currentPiece.getShape();
+            board[(y * boardWidth) + x] = currentPiece.getColor();
         }
 
         removeFullLines();
@@ -175,6 +178,7 @@ public class Game {
         }
     }
 
+
     /**
      * This method moves the current piece to the left by 1 if possible.
      */
@@ -222,6 +226,9 @@ public class Game {
 
         for (int i=0; i<(boardWidth * boardHeight); i++) {
             result += board[i];
+            if ((i +1) % 10 == 0) {
+                result += "\n";
+            }
         }
         return result;
     }
@@ -229,6 +236,6 @@ public class Game {
     public static void main(String[] args) {
         Game game = new Game();
         game.newPiece();
-        System.out.println(game.board);
+        System.out.println(game);
     }
 }
