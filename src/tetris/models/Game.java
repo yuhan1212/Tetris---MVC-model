@@ -9,7 +9,6 @@ public class Game {
 
     private int currentX = 0;
     private int currentY = 0;
-    private int numLinesRemoved = 0;
     private Piece currentPiece;
     private Piece.Shapes[] board;
 
@@ -113,13 +112,13 @@ public class Game {
 
         removeFullLines();
 
-        // TODO: 解讀一下
-        if (!isFallingFinished) {
-            newPiece();
-        }
+//        // TODO: 由controller叫？
+//        if (!isFallingFinished) {
+//            newPiece();
+//        }
     }
 
-    private void removeFullLines() {
+    public int removeFullLines() {
         int numFullLines = 0;
 
         for (int i = boardHeight - 1; i >= 0; i--) {
@@ -145,13 +144,13 @@ public class Game {
             }
         }
 
-        // TODO: 就是這裡
-        if (numFullLines > 0) {
-            numLinesRemoved += numFullLines;
+//        // TODO: 參透
+//        if (numFullLines > 0) {
             isFallingFinished = true;
-            currentPiece.setShape(Piece.Shapes.NoShape);
-        }
+//            currentPiece.setShape(Piece.Shapes.NoShape);
+//        }
 
+        return numFullLines;
     }
 
     /**
@@ -170,6 +169,7 @@ public class Game {
         currentX = boardWidth / 2 +1;
         currentY = boardHeight - 1 + currentPiece.minY();
         currentPiece.setRandomShape();
+        isFallingFinished = false;
 
         // cannot move anymore, game over
         if (!tryMove(currentPiece, currentX, currentY)) {
@@ -202,14 +202,6 @@ public class Game {
         return board[(y*boardWidth) + x];
     }
 
-    /**
-     * This method returns the total number of lines removed since the game started.
-     *
-     * @return The number of lines removed
-     */
-    public int getNumLinesRemoved() {
-        return numLinesRemoved;
-    }
 
     /**
      * This method tells whether the game is over.
