@@ -1,5 +1,7 @@
 package tetris.models;
 
+import java.util.Arrays;
+
 public class Game {
 
     private final int boardWidth = 10;
@@ -19,10 +21,7 @@ public class Game {
     public void Game() {
         currentPiece = new Piece();
         board = new Piece.Shapes[boardWidth*boardHeight];
-
-        // TODO: 這裡也許是controller在遊戲開始的時候叫?
         clearBoard();
-        newPiece();
     }
 
     /**
@@ -74,13 +73,12 @@ public class Game {
     }
 
     /**
-     * This method continues dropping the piece while possible
-     * and checks for game status once the piece is dropped.
+     * This method continues drops the piece to the bottom.
      */
     public void dropDown() {
         int newY = currentY;
         while (newY > 0) {
-            // Y continues to decrement by 1 if possible
+            // Y continues to decrement by 1 while possible
             if (!tryMove(currentPiece, currentX, newY - 1)) {
                 break;
             }
@@ -165,7 +163,7 @@ public class Game {
     /**
      * This method updates the current piece and set it at top of the board.
      */
-    private void newPiece() {
+    public void newPiece() {
         currentX = boardWidth / 2 +1;
         currentY = boardHeight - 1 + currentPiece.minY();
         currentPiece.setRandomShape();
@@ -202,6 +200,12 @@ public class Game {
         return board[(y*boardWidth) + x];
     }
 
+    /**
+     * This method returns the current status of game board
+     */
+    public Piece.Shapes[] getBoard() {
+        return board;
+    }
 
     /**
      * This method tells whether the game is over.
@@ -212,8 +216,19 @@ public class Game {
         return isGameOver;
     }
 
+    @Override
+    public String toString() {
+        String result = "";
+
+        for (int i=0; i<(boardWidth * boardHeight); i++) {
+            result += board[i];
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         Game game = new Game();
+        game.newPiece();
         System.out.println(game.board);
     }
 }
