@@ -1,4 +1,4 @@
-package tetris;
+package tetris.models;
 
 import java.awt.*;
 
@@ -40,7 +40,7 @@ public class Game {
     }
 
     public boolean isGameOver() {
-        return false;
+        return true;
     }
 
     public boolean isFallingFinished() {
