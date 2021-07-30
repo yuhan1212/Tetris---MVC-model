@@ -58,10 +58,27 @@ public class Game {
     }
 
     /**
+     * This method rotates the piece left 90 degrees.
+     *
+     */
+    public void rotateLeft() {
+        // No need to rotate square shape
+        if (currentPiece.getShape() != Piece.Shapes.SquareShape) {
+            Piece result = new Piece();
+
+            for (int i = 0; i < 4; ++i) {
+                result.setX(i, currentPiece.getY(i));
+                result.setY(i, -(currentPiece.getX(i)));
+            }
+            currentPiece = result;
+        }
+    }
+
+    /**
      * This method continues dropping the piece while possible
      * and checks for game status once the piece is dropped.
      */
-    private void dropDown() {
+    public void dropDown() {
         int newY = currentY;
         while (newY > 0) {
             // Y continues to decrement by 1 if possible
