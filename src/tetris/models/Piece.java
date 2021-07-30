@@ -62,7 +62,7 @@ public class Piece {
      * @param index where the x coordinate should be set
      * @param x     the x coordinate
      */
-    private void setX(int index, int x) {
+    public void setX(int index, int x) {
         coords[index][0] = x;
     }
 
@@ -72,7 +72,7 @@ public class Piece {
      * @param index where the y coordinate should be set
      * @param y     the y coordinate
      */
-    private void setY(int index, int y) {
+    public void setY(int index, int y) {
         coords[index][1] = y;
     }
 
