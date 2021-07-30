@@ -33,13 +33,13 @@ public class Piece {
         colors[7] = Color.MAGENTA;
         coordsTable = new int[][][]{
                 {{0, 0}, {0, 0}, {0, 0}, {0, 0}}, // NoShape
-                {{0, -1}, {0, 0}, {1, 0}, {1, 1}}, // ZShape
-                {{0, -1}, {0, 0}, {-1, 0}, {-1, 1}}, // SShape
-                {{0, -1}, {0, 0}, {0, 1}, {0, 2}}, // LineShape
-                {{-1, 0}, {0, 0}, {1, 0}, {0, 1}}, // TShape
-                {{0, 0}, {1, 0}, {0, 1}, {1, 1}}, // SquareShape
-                {{1, -1}, {0, -1}, {0, 0}, {0, 1}}, // LShape
-                {{-1, -1}, {0, -1}, {0, 0}, {0, 1}} // MirroredLShape
+                {{-1, 1}, {0, 1}, {0, 0}, {1, 0}}, // ZShape
+                {{-1, 0}, {0, 0}, {0, 1}, {1, 1}}, // SShape
+                {{-2, 0}, {-1, 0}, {0, 0}, {1, 0}}, // LineShape
+                {{0, 1}, {-1, 0}, {0, 0}, {1, 0}}, // TShape
+                {{-1, 1}, {-1, 0}, {0, 1}, {0, 0}}, // SquareShape
+                {{-1, 0}, {0, 0}, {1, 0}, {1, 1}}, // LShape
+                {{-1, 1}, {-1, 0}, {0, 0}, {1, 0}} // MirroredLShape
         };
         setShape(Shapes.NoShape);
     }
@@ -121,36 +121,6 @@ public class Piece {
         int max = Shapes.values().length - 1;
         int pick = (int) Math.round(Math.random() * max);
         setShape(Shapes.values()[pick]);
-    }
-
-    /**
-     * This method gets smallest x coordinate of the piece.
-     *
-     * @return the smallest x coordinate
-     */
-    public int minX() {
-        int min = coords[0][0];
-
-        for (int i = 0; i < 4; i++) {
-            min = Math.min(min, coords[i][0]);
-        }
-
-        return min;
-    }
-
-    /**
-     * This method gets smallest y coordinate of the piece.
-     *
-     * @return the smallest y coordinate
-     */
-    public int minY() {
-        int min = coords[0][1];
-
-        for (int i = 0; i < 4; i++) {
-            min = Math.min(min, coords[i][1]);
-        }
-
-        return min;
     }
 
     /**
