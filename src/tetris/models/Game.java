@@ -1,8 +1,12 @@
 package tetris.models;
 
+<<<<<<< HEAD
 import tetris.models.Piece;
 
 import java.awt.*;
+=======
+import java.util.Arrays;
+>>>>>>> 4414ef8ba70d3a403cd458645a96c948aa44af9f
 
 public class Game {
 
@@ -13,7 +17,6 @@ public class Game {
 
     private int currentX = 0;
     private int currentY = 0;
-    private int numLinesRemoved = 0;
     private Piece currentPiece;
     private Piece.Shapes[] board;
 
@@ -24,10 +27,7 @@ public class Game {
     public void Game() {
         currentPiece = new Piece();
         board = new Piece.Shapes[boardWidth*boardHeight];
-
-        // TODO: 這裡也許是controller在遊戲開始的時候叫?
         clearBoard();
-        newPiece();
     }
 
     /**
@@ -79,13 +79,12 @@ public class Game {
     }
 
     /**
-     * This method continues dropping the piece while possible
-     * and checks for game status once the piece is dropped.
+     * This method continues drops the piece to the bottom.
      */
     public void dropDown() {
         int newY = currentY;
         while (newY > 0) {
-            // Y continues to decrement by 1 if possible
+            // Y continues to decrement by 1 while possible
             if (!tryMove(currentPiece, currentX, newY - 1)) {
                 break;
             }
@@ -117,13 +116,13 @@ public class Game {
 
         removeFullLines();
 
-        // TODO: 解讀一下
-        if (!isFallingFinished) {
-            newPiece();
-        }
+//        // TODO: 由controller叫？
+//        if (!isFallingFinished) {
+//            newPiece();
+//        }
     }
 
-    private void removeFullLines() {
+    public int removeFullLines() {
         int numFullLines = 0;
 
         for (int i = boardHeight - 1; i >= 0; i--) {
@@ -149,13 +148,13 @@ public class Game {
             }
         }
 
-        // TODO: 就是這裡
-        if (numFullLines > 0) {
-            numLinesRemoved += numFullLines;
+//        // TODO: 參透
+//        if (numFullLines > 0) {
             isFallingFinished = true;
-            currentPiece.setShape(Piece.Shapes.NoShape);
-        }
+//            currentPiece.setShape(Piece.Shapes.NoShape);
+//        }
 
+        return numFullLines;
     }
 
     /**
@@ -170,10 +169,11 @@ public class Game {
     /**
      * This method updates the current piece and set it at top of the board.
      */
-    private void newPiece() {
+    public void newPiece() {
         currentX = boardWidth / 2 +1;
         currentY = boardHeight - 1 + currentPiece.minY();
         currentPiece.setRandomShape();
+        isFallingFinished = false;
 
         // cannot move anymore, game over
         if (!tryMove(currentPiece, currentX, currentY)) {
@@ -208,12 +208,10 @@ public class Game {
     }
 
     /**
-     * This method returns the total number of lines removed since the game started.
-     *
-     * @return The number of lines removed
+     * This method returns the current status of game board
      */
-    public int getNumLinesRemoved() {
-        return numLinesRemoved;
+    public Piece.Shapes[] getBoard() {
+        return board;
     }
 
     /**
@@ -225,8 +223,19 @@ public class Game {
         return isGameOver;
     }
 
+    @Override
+    public String toString() {
+        String result = "";
+
+        for (int i=0; i<(boardWidth * boardHeight); i++) {
+            result += board[i];
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         Game game = new Game();
+        game.newPiece();
         System.out.println(game.board);
     }
 }

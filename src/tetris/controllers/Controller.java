@@ -53,6 +53,7 @@ public class Controller implements ActionListener {
         keyBoardHandler = new KeyBoardHandler(this);
         frame = new Frame(keyBoardHandler);
         game = new Game();
+        game.newPiece();
         timer = new Timer(timeDelay, this);
         BGM = new SoundEffect(BGMFileName);
 //        BGM.play(level);
@@ -110,7 +111,7 @@ public class Controller implements ActionListener {
             // if current piece is settled
             if (this.game.isFallingFinished()) {
                 this.updateRecord(); // remove full line and update records
-                this.game.addPiece(); // new piece start falling
+                this.game.newPiece(); // new piece start falling
             }
             else {
                 // keep move current piece one line down
