@@ -135,7 +135,7 @@ public class Controller implements ActionListener {
         } else if (action == Action.ROTATE) {
             game.rotateLeft();
         } else if (action == Action.DOWNONE) {
-            game.oneLineDown();
+            game.dropOneLine();
         } else if (action == Action.ALLDOWN) {
             game.dropDown();
         }
