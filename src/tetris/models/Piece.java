@@ -106,6 +106,15 @@ public class Piece {
     }
 
     /**
+     * This method gives the color of the current piece.
+     *
+     * @return the color
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
      * This method picks a random shape for the new piece created.
      */
     void setRandomShape() {
