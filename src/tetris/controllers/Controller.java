@@ -36,8 +36,8 @@ public class Controller implements ActionListener {
     private boolean isPaused = true;
 
     private SoundEffect BGM;
-    private String BGMFileName = "BGM.wav";
-    private String BGMURL = "https://archive.org/details/TetrisThemeMusic";
+    private String BGMFileName = "Tetris.wav";
+//    private String BGMURL = "https://archive.org/details/TetrisThemeMusic";
     private Timer timer;
     private int timeDelay = 1000;
     private int startTimeDelay = 1000;
@@ -90,7 +90,7 @@ public class Controller implements ActionListener {
     }
 
     public void updateRecord() {
-        int AddRemoveLine = this.game.removeFullLines();
+        int AddRemoveLine = this.game.countFullLines();
         this.removedLines += AddRemoveLine;
         this.score += AddRemoveLine * (1 + this.level * this.LevelRate);
         this.level = 1 + this.removedLines / this.scoreToLevel;
@@ -110,10 +110,11 @@ public class Controller implements ActionListener {
 
         // if not gameOver and not isPaused, we need to call models
         if (!this.game.isGameOver() && !this.isPaused()) {
+            System.out.printf("finishedFalling %b\n", this.game.isFallingFinished());
             // if current piece is settled
             if (this.game.isFallingFinished()) {
                 this.updateRecord(); // remove full line and update records
-                this.game.newPiece(); // new piece start falling
+//                this.game.newPiece(); // new piece start falling
             }
             else {
                 // keep move current piece one line down
@@ -133,15 +134,21 @@ public class Controller implements ActionListener {
     public void move(Action action) {
         if (action == Action.LEFT) {
             game.moveLeft();
+            System.out.println("move left");
         } else if (action == Action.RIGHT) {
             game.moveRight();
+            System.out.println("move right");
         } else if (action == Action.ROTATE) {
             game.rotateLeft();
+            System.out.println("rotate left");
         } else if (action == Action.DOWNONE) {
             game.dropOneLine();
+            System.out.println("drop one");
         } else if (action == Action.ALLDOWN) {
             game.dropDown();
+            System.out.println("drop down");
         }
+        updateView();
     }
 
     public int updateTimeDelay() {

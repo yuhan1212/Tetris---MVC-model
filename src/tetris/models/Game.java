@@ -2,6 +2,7 @@ package tetris.models;
 
 import tetris.models.Piece;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -81,12 +82,12 @@ public class Game {
      */
     public void dropDown() {
         int newY = currentY;
-        while (newY > 0) {
+        while (newY < boardHeight) {
             // Y continues to decrement by 1 while possible
-            if (!tryMove(currentPiece, currentX, newY - 1)) {
+            if (!tryMove(currentPiece, currentX, newY + 1)) {
                 break;
             }
-            newY--;
+            newY++;
         }
         pieceDropped();
     }
@@ -96,7 +97,7 @@ public class Game {
      */
     public void dropOneLine() {
         // if the  piece can't drop, it's reached the bottom/other pieces
-        if (!tryMove(currentPiece, currentX, currentY - 1)) {
+        if (!tryMove(currentPiece, currentX, currentY + 1)) {
             pieceDropped();
         }
     }
@@ -112,16 +113,18 @@ public class Game {
             board[(y * boardWidth) + x] = currentPiece.getColor();
         }
 
-        removeFullLines();
+        countFullLines();
+        newPiece();
     }
 
-    public int removeFullLines() {
+    public int countFullLines() {
         int numFullLines = 0;
+        ArrayList<Integer> fullLines = new ArrayList<>();
 
         for (int i = boardHeight - 1; i >= 0; i--) {
             boolean lineFull = true;
 
-            // if there is a non-shape piece within the line, then the line isn't full
+            // if there is color black within the line, then the line isn't full
             for (int j = 0; j < boardWidth; j++) {
                 if (colorAt(j, i) == Color.BLACK) {
                     lineFull = false;
@@ -130,14 +133,27 @@ public class Game {
             }
 
             if (lineFull) {
+                fullLines.add(i);
                 numFullLines++;
+            }
+        }
 
-                // moving all the lines above the full line one line down
-                for (int k = i; k < boardHeight - 1; k++) {
-                    for (int j = 0; j < boardWidth; j++) {
-                        board[(k * boardWidth) + j] = colorAt(j, k + 1);
-                    }
-                }
+        if (numFullLines > 0) {
+            removeFullLines(fullLines);
+        }
+        System.out.println(numFullLines);
+        return numFullLines;
+    }
+
+
+    public void removeFullLines(ArrayList<Integer> fullLines) {
+        System.out.println(fullLines);
+        System.out.println(fullLines.size());
+        for (int i = 0; i < fullLines.size(); i++) {
+
+            // moving all the lines above the full line one line down
+            for (int j = 0; j < boardWidth; j++) {
+                board[(fullLines.get(i) * boardWidth) + j] = colorAt(j, fullLines.get(i) - 1);
             }
         }
 
@@ -147,7 +163,6 @@ public class Game {
 //            currentPiece.setShape(Piece.Shapes.NoShape);
 //        }
 
-        return numFullLines;
     }
 
     /**
