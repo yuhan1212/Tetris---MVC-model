@@ -180,7 +180,7 @@ public class Game {
      */
     public void newPiece() {
         currentX = boardWidth / 2 + 1;
-        currentY = currentPiece.minY();
+        currentY = 2;
         currentPiece.setRandomShape();
         isFallingFinished = false;
 

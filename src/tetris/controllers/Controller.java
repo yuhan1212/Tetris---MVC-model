@@ -36,8 +36,8 @@ public class Controller implements ActionListener {
     private boolean isPaused = true;
 
     private SoundEffect BGM;
-    private String BGMFileName = "BGM.wav";
-    private String BGMURL = "https://archive.org/details/TetrisThemeMusic";
+    private String BGMFileName = "Tetris.wav";
+//    private String BGMURL = "https://archive.org/details/TetrisThemeMusic";
     private Timer timer;
     private int timeDelay = 1000;
     private int startTimeDelay = 1000;
@@ -133,14 +133,19 @@ public class Controller implements ActionListener {
     public void move(Action action) {
         if (action == Action.LEFT) {
             game.moveLeft();
+            System.out.println("move left");
         } else if (action == Action.RIGHT) {
             game.moveRight();
+            System.out.println("move right");
         } else if (action == Action.ROTATE) {
             game.rotateLeft();
+            System.out.println("rotate left");
         } else if (action == Action.DOWNONE) {
             game.dropOneLine();
+            System.out.println("drop one");
         } else if (action == Action.ALLDOWN) {
             game.dropDown();
+            System.out.println("drop down");
         }
     }
 

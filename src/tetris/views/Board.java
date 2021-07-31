@@ -92,6 +92,18 @@ public class Board extends JPanel {
                 int y = this.piecePos[i][1];
                 g.fillRect(x * gridLength, y * gridLength, gridLength, gridLength);
             }
+
+            // draw vertical lines
+            for (i = this.gridLength; i < this.BOARDWIDTH; i += this.gridLength) {
+                g.setColor(Color.GRAY);
+                g.drawLine(i, 0, i, this.BOARDHEIGHT);
+            }
+
+            // draw horizontal lines
+            for (i = this.gridLength; i < this.BOARDHEIGHT; i += this.gridLength) {
+                g.setColor(Color.GRAY);
+                g.drawLine(0, i, this.BOARDWIDTH, i);
+            }
         }
     }
 
