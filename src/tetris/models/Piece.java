@@ -1,6 +1,7 @@
 package tetris.models;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Piece {
 
@@ -115,12 +116,14 @@ public class Piece {
     }
 
     /**
-     * This method picks a random shape for the new piece created.
+     * This method picks a random shape for the current piece.
      */
     void setRandomShape() {
-        int max = Shapes.values().length - 1;
-        int pick = (int) Math.round(Math.random() * max);
-        setShape(Shapes.values()[pick]);
+        Random r = new Random();
+        int x = Math.abs(r.nextInt()) % 7 + 1;
+
+        Shapes[] values = Shapes.values();
+        setShape(values[x]);
     }
 
     public String toString() {
