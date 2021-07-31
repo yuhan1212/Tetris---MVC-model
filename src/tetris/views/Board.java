@@ -21,7 +21,10 @@ public class Board extends JPanel {
     private final Color BOARDCOLOR = Color.BLACK;
     private boolean isGameOver = false;
     private boolean isPaused = true;
-    private Color[][] colors;
+    private Color[] board;
+    private Color pieceColor;
+    private int[][] piecePos;
+
 
 
 
@@ -42,8 +45,16 @@ public class Board extends JPanel {
         this.isPaused = isPaused;
     }
 
-    public void setColors(Color[][] colors) {
-        this.colors = colors;
+    public void setBoard(Color[] board) {
+        this.board = board;
+    }
+
+    public void setPieceColor(Color color) {
+        this.pieceColor = color;
+    }
+
+    public void setPiecePos(int[][] pos) {
+        this.piecePos = pos;
     }
 
     public void paint() {
@@ -63,12 +74,23 @@ public class Board extends JPanel {
         } else if (this.isPaused) {
             g.setColor(Color.WHITE);
             g.drawString("Press 's' to start", 90, 300);
-        } else if (colors != null){
+        } else if (board != null){
+
+            // paint base board
+            int i = 0;
             for (int r = 0; r < ROWS; r++) {
                 for (int c = 0; c < COLS; c++) {
-                    g.setColor(colors[r][c]);
+                    g.setColor(board[i]);
                     g.fillRect(c * gridLength, r * gridLength, gridLength, gridLength);
                 }
+            }
+
+            //p paint current piece
+            for (i = 0; i < 4; i++) {
+                g.setColor(this.pieceColor);
+                int x = this.piecePos[i][0];
+                int y = this.piecePos[i][1];
+                g.fillRect(x * gridLength, y * gridLength, gridLength, gridLength);
             }
         }
     }

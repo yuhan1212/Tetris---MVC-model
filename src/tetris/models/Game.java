@@ -1,8 +1,5 @@
 package tetris.models;
-
-import tetris.models.Piece;
 import java.awt.*;
-import java.util.Arrays;
 
 
 public class Game {
@@ -23,7 +20,7 @@ public class Game {
      */
     public Game() {
         currentPiece = new Piece();
-        board = new Piece.Shapes[boardWidth*boardHeight];
+        board = new Color[boardWidth*boardHeight];
         clearBoard();
     }
 
@@ -46,7 +43,7 @@ public class Game {
             }
 
             // if there is already other pieces at the new position
-            if (shapeAt(x, y) != Piece.Shapes.NoShape) {
+            if (colorAt(x, y) != Color.BLACK) {
                 return false;
             }
         }
@@ -80,12 +77,12 @@ public class Game {
      */
     public void dropDown() {
         int newY = currentY;
-        while (newY > 0) {
+        while (newY < boardHeight) {
             // Y continues to decrement by 1 while possible
-            if (!tryMove(currentPiece, currentX, newY - 1)) {
+            if (!tryMove(currentPiece, currentX, newY + 1)) {
                 break;
             }
-            newY--;
+            newY++;
         }
         pieceDropped();
     }
@@ -95,7 +92,7 @@ public class Game {
      */
     public void dropOneLine() {
         // if the  piece can't drop, it's reached the bottom/other pieces
-        if (!tryMove(currentPiece, currentX, currentY - 1)) {
+        if (!tryMove(currentPiece, currentX, currentY + 1)) {
             pieceDropped();
         }
     }
@@ -119,6 +116,17 @@ public class Game {
 //        }
     }
 
+    public int[][] currentPos() {
+        int[][] res = new int[4][2];
+        for (int i = 0; i < 4; i++) {
+            int x = currentX + currentPiece.getX(i);
+            int y = currentY - currentPiece.getY(i);
+            res[i][0] = x;
+            res[i][1] = y;
+        }
+        return res;
+    }
+
     public int removeFullLines() {
         int numFullLines = 0;
 
@@ -127,7 +135,7 @@ public class Game {
 
             // if there is a non-shape piece within the line, then the line isn't full
             for (int j = 0; j < boardWidth; j++) {
-                if (shapeAt(j, i) == Piece.Shapes.NoShape) {
+                if (colorAt(j, i) == Color.BLACK) {
                     lineFull = false;
                     break;
                 }
@@ -139,7 +147,7 @@ public class Game {
                 // moving all the lines above the full line one line down
                 for (int k = i; k < boardHeight - 1; k++) {
                     for (int j = 0; j < boardWidth; j++) {
-                        board[(k * boardWidth) + j] = shapeAt(j, k + 1);
+                        board[(k * boardWidth) + j] = colorAt(j, k + 1);
                     }
                 }
             }
@@ -159,16 +167,20 @@ public class Game {
      */
     private void clearBoard() {
         for (int i = 0; i < boardHeight * boardWidth; i++) {
-            board[i] = Piece.Shapes.NoShape;
+            board[i] = Color.BLACK;
         }
+    }
+
+    public Color getColor() {
+        return currentPiece.getColor();
     }
 
     /**
      * This method updates the current piece and set it at top of the board.
      */
     public void newPiece() {
-        currentX = boardWidth / 2 +1;
-        currentY = boardHeight - 1 + currentPiece.minY();
+        currentX = boardWidth / 2 + 1;
+        currentY = currentPiece.minY();
         currentPiece.setRandomShape();
         isFallingFinished = false;
 
@@ -200,14 +212,14 @@ public class Game {
      * @param y The y coordinate
      * @return The shape of the tetris piece
      */
-    private Piece.Shapes shapeAt(int x, int y) {
+    private Color colorAt(int x, int y) {
         return board[(y*boardWidth) + x];
     }
 
     /**
      * This method returns the current status of game board
      */
-    public Piece.Shapes[] getBoard() {
+    public Color[] getBoard() {
         return board;
     }
 
@@ -225,7 +237,8 @@ public class Game {
         String result = "";
 
         for (int i=0; i<(boardWidth * boardHeight); i++) {
-            result += board[i];
+            Color c = board[i];
+            result += c.toString();
             if ((i +1) % 10 == 0) {
                 result += "\n";
             }
@@ -233,9 +246,17 @@ public class Game {
         return result;
     }
 
+    public boolean isFallingFinished() {
+        return isFallingFinished;
+    }
+
+
     public static void main(String[] args) {
         Game game = new Game();
         game.newPiece();
+        game.currentPiece.setRandomShape();
+        game.dropDown();
+        System.out.println(game.currentPiece);
         System.out.println(game);
     }
 }

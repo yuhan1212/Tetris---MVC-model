@@ -173,6 +173,13 @@ public class Piece {
         return result;
     }
 
+    public String toString() {
+        String res = "";
+        res += this.shape.toString();
+        res += this.color.toString();
+        return res;
+    }
+
     public static void main(String[] args) {
         Piece piece = new Piece();
     }
