@@ -82,6 +82,7 @@ public class Board extends JPanel {
                 for (int c = 0; c < COLS; c++) {
                     g.setColor(board[i]);
                     g.fillRect(c * gridLength, r * gridLength, gridLength, gridLength);
+                    i ++;
                 }
             }
 

@@ -90,7 +90,7 @@ public class Controller implements ActionListener {
     }
 
     public void updateRecord() {
-        int AddRemoveLine = this.game.removeFullLines();
+        int AddRemoveLine = this.game.countFullLines();
         this.removedLines += AddRemoveLine;
         this.score += AddRemoveLine * (1 + this.level * this.LevelRate);
         this.level = 1 + this.removedLines / this.scoreToLevel;
@@ -110,10 +110,11 @@ public class Controller implements ActionListener {
 
         // if not gameOver and not isPaused, we need to call models
         if (!this.game.isGameOver() && !this.isPaused()) {
+            System.out.printf("finishedFalling %b\n", this.game.isFallingFinished());
             // if current piece is settled
             if (this.game.isFallingFinished()) {
                 this.updateRecord(); // remove full line and update records
-                this.game.newPiece(); // new piece start falling
+//                this.game.newPiece(); // new piece start falling
             }
             else {
                 // keep move current piece one line down
@@ -147,6 +148,7 @@ public class Controller implements ActionListener {
             game.dropDown();
             System.out.println("drop down");
         }
+        updateView();
     }
 
     public int updateTimeDelay() {
