@@ -141,18 +141,19 @@ public class Game {
         if (numFullLines > 0) {
             removeFullLines(fullLines);
         }
-
+        System.out.println(numFullLines);
         return numFullLines;
     }
 
 
     public void removeFullLines(ArrayList<Integer> fullLines) {
-
+        System.out.println(fullLines);
+        System.out.println(fullLines.size());
         for (int i = 0; i < fullLines.size(); i++) {
 
             // moving all the lines above the full line one line down
             for (int j = 0; j < boardWidth; j++) {
-                board[(fullLines.get(i) * boardWidth) + j] = colorAt(j, i - 1);
+                board[(fullLines.get(i) * boardWidth) + j] = colorAt(j, fullLines.get(i) - 1);
             }
         }
 
