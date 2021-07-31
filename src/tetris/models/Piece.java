@@ -123,26 +123,6 @@ public class Piece {
         setShape(Shapes.values()[pick]);
     }
 
-    /**
-     * This method rotates the piece left 90 degrees.
-     *
-     * @return a new piece that is rotated left
-     */
-    public Piece rotateLeft() {
-        // No need to rotate square shape
-        if (shape == Shapes.SquareShape) {
-            return this;
-        }
-
-        Piece result = new Piece();
-
-        for (int i = 0; i < 4; ++i) {
-            result.setX(i, getY(i));
-            result.setY(i, -(getX(i)));
-        }
-        return result;
-    }
-
     public String toString() {
         String res = "";
         res += this.shape.toString();
