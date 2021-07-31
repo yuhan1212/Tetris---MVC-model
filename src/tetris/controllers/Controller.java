@@ -83,7 +83,7 @@ public class Controller implements ActionListener {
                 this.isPaused,
                 this.game.getBoard(),
                 this.game.getColor(),
-                this.game.currentPos(),
+                this.game.currentCoords(),
                 this.score,
                 this.level,
                 this.removedLines);

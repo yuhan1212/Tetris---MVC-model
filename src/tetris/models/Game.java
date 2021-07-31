@@ -1,5 +1,8 @@
 package tetris.models;
+
+import tetris.models.Piece;
 import java.awt.*;
+import java.util.Arrays;
 
 
 public class Game {
@@ -27,7 +30,7 @@ public class Game {
     /**
      * This method tells whether the piece can be moved to the provided coordinate.
      *
-     * @param newPiece the new piece that will be created if the move is possible
+     * @param newPiece the new piece that current piece should be updated to
      * @param newX the x coordinate of the destination
      * @param newY the y coordinate of the destination
      * @return true if the piece can be moved, otherwise false
@@ -63,6 +66,7 @@ public class Game {
         // No need to rotate square shape
         if (currentPiece.getShape() != Piece.Shapes.SquareShape) {
             Piece result = new Piece();
+            result.setShape(currentPiece.getShape());
 
             for (int i = 0; i < 4; ++i) {
                 result.setX(i, currentPiece.getY(i));
@@ -77,12 +81,12 @@ public class Game {
      */
     public void dropDown() {
         int newY = currentY;
-        while (newY < boardHeight) {
+        while (newY > 0) {
             // Y continues to decrement by 1 while possible
-            if (!tryMove(currentPiece, currentX, newY + 1)) {
+            if (!tryMove(currentPiece, currentX, newY - 1)) {
                 break;
             }
-            newY++;
+            newY--;
         }
         pieceDropped();
     }
@@ -92,7 +96,7 @@ public class Game {
      */
     public void dropOneLine() {
         // if the  piece can't drop, it's reached the bottom/other pieces
-        if (!tryMove(currentPiece, currentX, currentY + 1)) {
+        if (!tryMove(currentPiece, currentX, currentY - 1)) {
             pieceDropped();
         }
     }
@@ -109,22 +113,6 @@ public class Game {
         }
 
         removeFullLines();
-
-//        // TODO: 由controller叫？
-//        if (!isFallingFinished) {
-//            newPiece();
-//        }
-    }
-
-    public int[][] currentPos() {
-        int[][] res = new int[4][2];
-        for (int i = 0; i < 4; i++) {
-            int x = currentX + currentPiece.getX(i);
-            int y = currentY - currentPiece.getY(i);
-            res[i][0] = x;
-            res[i][1] = y;
-        }
-        return res;
     }
 
     public int removeFullLines() {
@@ -153,7 +141,7 @@ public class Game {
             }
         }
 
-//        // TODO: 參透
+//        // TODO: 待參透
 //        if (numFullLines > 0) {
             isFallingFinished = true;
 //            currentPiece.setShape(Piece.Shapes.NoShape);
@@ -163,7 +151,7 @@ public class Game {
     }
 
     /**
-     * This method clears the board, setting all shapes to noShape.
+     * This method clears the board, setting all colors to black.
      */
     private void clearBoard() {
         for (int i = 0; i < boardHeight * boardWidth; i++) {
@@ -171,15 +159,15 @@ public class Game {
         }
     }
 
-    public Color getColor() {
-        return currentPiece.getColor();
-    }
-
     /**
      * This method updates the current piece and set it at top of the board.
      */
     public void newPiece() {
+<<<<<<< HEAD
         currentX = boardWidth / 2 + 1;
+=======
+        currentX = boardWidth / 2;
+>>>>>>> fbd8b450b06abc2130ed1a79590cd1ec8d94dd64
         currentY = 2;
         currentPiece.setRandomShape();
         isFallingFinished = false;
@@ -190,6 +178,22 @@ public class Game {
         }
     }
 
+    /**
+     * This method gets the coordinates of the current piece.
+     *
+     * @return the coordinates of the current piece
+     */
+    public int[][] currentCoords() {
+        int[][] res = new int[4][2];
+
+        for (int i = 0; i < 4; i++) {
+            int x = currentX + currentPiece.getX(i);
+            int y = currentY - currentPiece.getY(i);
+            res[i][0] = x;
+            res[i][1] = y;
+        }
+        return res;
+    }
 
     /**
      * This method moves the current piece to the left by 1 if possible.
@@ -218,9 +222,20 @@ public class Game {
 
     /**
      * This method returns the current status of game board
+     *
+     * @return the board array consists of colors
      */
     public Color[] getBoard() {
         return board;
+    }
+
+    /**
+     * This method returns the color of the current piece
+     *
+     * @return the color
+     */
+    public Color getColor() {
+        return currentPiece.getColor();
     }
 
     /**
@@ -232,13 +247,21 @@ public class Game {
         return isGameOver;
     }
 
+    /**
+     * This method tell whether the current piece has finished falling.
+     *
+     * @return true if the piece finished falling
+     */
+    public boolean isFallingFinished() {
+        return isFallingFinished;
+    }
+
     @Override
     public String toString() {
         String result = "";
 
         for (int i=0; i<(boardWidth * boardHeight); i++) {
-            Color c = board[i];
-            result += c.toString();
+            result += board[i];
             if ((i +1) % 10 == 0) {
                 result += "\n";
             }
@@ -246,17 +269,9 @@ public class Game {
         return result;
     }
 
-    public boolean isFallingFinished() {
-        return isFallingFinished;
-    }
-
-
     public static void main(String[] args) {
         Game game = new Game();
         game.newPiece();
-        game.currentPiece.setRandomShape();
-        game.dropDown();
-        System.out.println(game.currentPiece);
         System.out.println(game);
     }
 }

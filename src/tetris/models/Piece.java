@@ -1,6 +1,7 @@
 package tetris.models;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Piece {
 
@@ -115,32 +116,14 @@ public class Piece {
     }
 
     /**
-     * This method picks a random shape for the new piece created.
+     * This method picks a random shape for the current piece.
      */
     void setRandomShape() {
-        int max = Shapes.values().length - 1;
-        int pick = (int) Math.round(Math.random() * max);
-        setShape(Shapes.values()[pick]);
-    }
+        Random r = new Random();
+        int x = Math.abs(r.nextInt()) % 7 + 1;
 
-    /**
-     * This method rotates the piece left 90 degrees.
-     *
-     * @return a new piece that is rotated left
-     */
-    public Piece rotateLeft() {
-        // No need to rotate square shape
-        if (shape == Shapes.SquareShape) {
-            return this;
-        }
-
-        Piece result = new Piece();
-
-        for (int i = 0; i < 4; ++i) {
-            result.setX(i, getY(i));
-            result.setY(i, -(getX(i)));
-        }
-        return result;
+        Shapes[] values = Shapes.values();
+        setShape(values[x]);
     }
 
     public String toString() {
