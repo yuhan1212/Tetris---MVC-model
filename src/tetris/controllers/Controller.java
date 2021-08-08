@@ -37,7 +37,6 @@ public class Controller implements ActionListener {
 
     private SoundEffect BGM;
     private String BGMFileName = "Tetris.wav";
-//    private String BGMURL = "https://archive.org/details/TetrisThemeMusic";
     private Timer timer;
     private int timeDelay = 1000;
     private int startTimeDelay = 1000;
@@ -55,23 +54,22 @@ public class Controller implements ActionListener {
         game = new Game();
         game.newPiece();
         timer = new Timer(timeDelay, this);
-        BGM = new SoundEffect(BGMFileName);
-//        BGM.play(level);
+        BGM = new SoundEffect(BGMFileName, true);
         timer.start();
     }
 
     public void pause() {
         this.isPaused = true;
         updateView();
-//        BGM.stop();
+        BGM.stop();
         timer.stop();
     }
 
     public void start() {
         this.isPaused = false;
         updateView();
+        BGM.resume();
         timer.start();
-        BGM.play();
     }
 
     public boolean isPaused() {
@@ -92,8 +90,11 @@ public class Controller implements ActionListener {
     public void updateRecord() {
         int AddRemoveLine = this.game.countFullLines();
         this.removedLines += AddRemoveLine;
+        System.out.printf("this.removedLines: %d", this.removedLines);
         this.score += AddRemoveLine * (1 + this.level * this.LevelRate);
+        System.out.printf("this.score: %f", this.score);
         this.level = 1 + this.removedLines / this.scoreToLevel;
+        System.out.printf("this.level: %d", this.level);
     }
 
     private boolean isLevelUp() {
@@ -114,7 +115,6 @@ public class Controller implements ActionListener {
             // if current piece is settled
             if (this.game.isFallingFinished()) {
                 this.updateRecord(); // remove full line and update records
-//                this.game.newPiece(); // new piece start falling
             }
             else {
                 // keep move current piece one line down
@@ -134,19 +134,19 @@ public class Controller implements ActionListener {
     public void move(Action action) {
         if (action == Action.LEFT) {
             game.moveLeft();
-            System.out.println("move left");
+//            System.out.println("move left");
         } else if (action == Action.RIGHT) {
             game.moveRight();
-            System.out.println("move right");
+//            System.out.println("move right");
         } else if (action == Action.ROTATE) {
             game.rotateLeft();
-            System.out.println("rotate left");
+//            System.out.println("rotate left");
         } else if (action == Action.DOWNONE) {
             game.dropOneLine();
-            System.out.println("drop one");
+//            System.out.println("drop one");
         } else if (action == Action.ALLDOWN) {
             game.dropDown();
-            System.out.println("drop down");
+//            System.out.println("drop down");
         }
         updateView();
     }
