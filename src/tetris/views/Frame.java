@@ -22,7 +22,7 @@ public class Frame extends JFrame{
         board = new Board();
         board.addKeyListener(keyBoardHandler);
         statusBar = new JLabel();
-        statusBar.setBorder(BorderFactory.createEmptyBorder(StatusBarBoarder, StatusBarBoarder, StatusBarBoarder, StatusBarBoarder));
+        statusBar.setBorder(BorderFactory.createEmptyBorder(StatusBarBoarder/2, StatusBarBoarder, StatusBarBoarder, StatusBarBoarder));
         statusAttributes = new StatusAttributes();
         String status = statusAttributes.fitLabel();
         statusBar.setText(status);
@@ -39,7 +39,7 @@ public class Frame extends JFrame{
                        Color[] board,
                        Color pieceColor,
                        int[][] piecePos,
-                       double score,
+                       int score,
                        int level,
                        int lines) {
         this.board.setGameOver(isGameOver);

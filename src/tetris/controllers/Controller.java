@@ -21,10 +21,10 @@ public class Controller implements ActionListener {
     /**
      * Related to Tetris views
      */
-    private final double LevelRate = 0.5;
-    private final int scoreToLevel = 10;
+    private final int LevelRate = 100;
+    private final int scoreToLevel = 1000;
     private Frame frame;
-    private double score = 0;
+    private int score = 0;
     private int level = 1;
     private int old_level = 1;
     private int removedLines = 0;
@@ -91,8 +91,8 @@ public class Controller implements ActionListener {
         int AddRemoveLine = this.game.countFullLines();
         this.removedLines += AddRemoveLine;
         System.out.printf("this.removedLines: %d", this.removedLines);
-        this.score += AddRemoveLine * (1 + this.level * this.LevelRate);
-        System.out.printf("this.score: %f", this.score);
+        this.score += AddRemoveLine * this.level * this.LevelRate;
+        System.out.printf("this.score: %d", this.score);
         this.level = 1 + this.removedLines / this.scoreToLevel;
         System.out.printf("this.level: %d", this.level);
     }

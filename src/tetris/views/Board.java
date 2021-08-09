@@ -31,7 +31,7 @@ public class Board extends JPanel {
     public Board() {
         // make the panel focusable so that it can react to keyboard inputs
         setFocusable(true);
-        setBorder(BorderFactory.createEmptyBorder(BoardBoarder, BoardBoarder, BoardBoarder, BoardBoarder));
+//        setBorder(BorderFactory.createEmptyBorder(BoardBoarder, BoardBoarder, BoardBoarder, BoardBoarder));
         setPreferredSize(new Dimension(BOARDWIDTH, BOARDHEIGHT));
         setLayout(new GridLayout(ROWS, COLS));
         setBackground(BOARDCOLOR);
