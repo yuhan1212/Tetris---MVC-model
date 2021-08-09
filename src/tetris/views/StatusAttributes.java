@@ -2,7 +2,7 @@ package tetris.views;
 
 public class StatusAttributes {
 
-    private double score;
+    private int score;
     private int level;
     private int removedLines;
     private boolean isPaused = true;
@@ -19,7 +19,7 @@ public class StatusAttributes {
         this.isPaused = isPaused;
     }
 
-    public void setRecords(double score, int level, int lines) {
+    public void setRecords(int score, int level, int lines) {
         this.score = score;
         this.level = level;
         this.removedLines = lines;
@@ -28,14 +28,14 @@ public class StatusAttributes {
     public String fitLabel() {
         String res = "";
         if (this.isGameOver) {
-            res += String.format("<html>Score: %.2f<br />", this.score);
+            res += String.format("<html>Score: %d<br />", this.score);
             res += String.format("Level: %d<br />", this.level);
             res += String.format("Lined: %d</html>", this.removedLines);
             res += "Press 's' to start a new game.";
             return res;
         }
 
-        res += String.format("<html>Score: %.2f<br />", this.score);
+        res += String.format("<html>Score: %d<br />", this.score);
         res += String.format("Level: %d<br />", this.level);
         res += String.format("Lines: %d<br />", this.removedLines);
 

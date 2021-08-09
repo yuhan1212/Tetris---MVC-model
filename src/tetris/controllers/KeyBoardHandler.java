@@ -13,8 +13,8 @@ public class KeyBoardHandler implements KeyListener {
 
     public KeyBoardHandler(Controller controller) {
         this.controller = controller;
-        this.moveSoundEffect = new SoundEffect(moveSoundFileName);
-        this.dropSoundEffect = new SoundEffect(dropSoundFileName);
+        this.moveSoundEffect = new SoundEffect(moveSoundFileName, false);
+        this.dropSoundEffect = new SoundEffect(dropSoundFileName, false);
     }
 
     @Override
