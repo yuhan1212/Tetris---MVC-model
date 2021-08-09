@@ -116,6 +116,7 @@ public class Game {
         }
 
         countFullLines();
+        isFallingFinished = false;
         newPiece();
     }
 
@@ -147,9 +148,9 @@ public class Game {
             }
         }
 
-//        if (numFullLines > 0) {
-//            isFallingFinished = true;
-//        }
+        if (numFullLines > 0) {
+            isFallingFinished = true;
+        }
         return numFullLines;
     }
 
