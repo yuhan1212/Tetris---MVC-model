@@ -52,5 +52,9 @@ public class SoundEffect {
         }
         this.clip.start();
     }
+
+    public void restart() {
+        this.play();
+    }
 }
 
