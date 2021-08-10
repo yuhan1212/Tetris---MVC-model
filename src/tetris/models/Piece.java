@@ -122,9 +122,9 @@ public class Piece {
     void setRandomShape() {
         Random r = new Random();
         Shapes[] values = Shapes.values();
-        int x = r.nextInt(values.length) % 7 + 1;
+        int x = r.nextInt(values.length - 1) + 1;
         while (x == lastUsed) {
-            x = r.nextInt(values.length) % 7 + 1;
+            x = r.nextInt(values.length - 1) + 1;
         }
         lastUsed = x;
 
