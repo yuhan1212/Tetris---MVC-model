@@ -37,6 +37,7 @@ public class Controller implements ActionListener {
 
     private SoundEffect BGM;
     private String BGMFileName = "Tetris.wav";
+    private SoundEffect removeSoundEffect = new SoundEffect("remove.wav", true);
     private Timer timer;
     private int timeDelay = 1000;
     private int startTimeDelay = 1000;
@@ -104,10 +105,12 @@ public class Controller implements ActionListener {
 
     public void updateRecord() {
         int addRemoveLine = this.game.countFullLines();
-        System.out.printf("addRemoveLine: %d\n", addRemoveLine);
         this.removedLines += addRemoveLine;
         this.score += addRemoveLine * this.level * this.LevelRate;
         this.level = 1 + this.removedLines / this.scoreToLevel;
+        if (addRemoveLine > 0) {
+            removeSoundEffect.play();
+        }
     }
 
     private boolean isLevelUp() {
@@ -123,7 +126,6 @@ public class Controller implements ActionListener {
         // We reach here every time the alarm fires.
         // if not gameOver and not isPaused, we need to call models
         if (!this.game.isGameOver() && !this.isPaused()) {
-//            System.out.printf("finishedFalling %b\n", this.game.isFallingFinished());
             // if current piece is settled
             if (this.game.isFallingFinished()) {
                 this.updateRecord(); // remove full line and update records
