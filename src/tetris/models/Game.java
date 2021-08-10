@@ -65,6 +65,9 @@ public class Game {
      */
     public void rotateLeft() {
         // No need to rotate square shape
+        if (isFallingFinished) {
+            return;
+        }
         if (currentPiece.getShape() != Piece.Shapes.SquareShape) {
             Piece result = new Piece();
             result.setShape(currentPiece.getShape());
@@ -72,6 +75,9 @@ public class Game {
             for (int i = 0; i < 4; ++i) {
                 result.setX(i, currentPiece.getY(i));
                 result.setY(i, -(currentPiece.getX(i)));
+            }
+            if (!tryMove(result, currentX, currentY)) {
+                return;
             }
             currentPiece = result;
         }
@@ -99,6 +105,7 @@ public class Game {
     public void dropOneLine() {
         // if the  piece can't drop, it's reached the bottom/other pieces
         if (!tryMove(currentPiece, currentX, currentY + 1)) {
+            isFallingFinished = true;
             pieceDropped();
         }
     }
@@ -114,11 +121,13 @@ public class Game {
             board[(y * boardWidth) + x] = currentPiece.getColor();
         }
 
-        this.isFallingFinished = true;
-//        countFullLines();
-//        newPiece();
     }
 
+    /**
+     * This method counts the number of full lines and remove them if there is any.
+     *
+     * @return the number of full lines
+     */
     public int countFullLines() {
         int numFullLines = 0;
 
@@ -136,36 +145,29 @@ public class Game {
 
             if (lineFull) {
                 numFullLines++;
-                for (int j = i; j >= 1 ; j--) {
-
-                    // moving all the lines above the full line one line down
-                    for (int k = 0; k < boardWidth; k++) {
-//                        System.out.printf("board coordinate: %d", j*boardWidth + k);
-                        board[(j*boardWidth) + k] = colorAt(k, j - 1);
-                    }
-                }
+                removeFullLines(i);
                 i++;
             }
         }
-//
-//        if (numFullLines > 0) {
-//            isFallingFinished = true;
-//        }
+
         newPiece();
         return numFullLines;
     }
 
-//
-//    public void removeFullLines(ArrayList<Integer> fullLines) {
-//        // TODO: i has to iterate over board height to update the whole board, but also need to iterate over fullLines
-//        for (int i = 0; i < boardHeight-1; i++) {
-//
-//            // moving all the lines above the full line one line down
-//            for (int j = 0; j < boardWidth; j++) {
-//                board[(fullLines.get(i) * boardWidth) + j] = colorAt(j, fullLines.get(i) - 1);
-//            }
-//        }
-//    }
+    /**
+     * This method remove the full line in the board.
+     *
+     * @param y the y coordinate of the full line to be removed
+     */
+    public void removeFullLines(int y) {
+        for (int j = y; j >= 1 ; j--) {
+
+            // moving all the lines above the full line one line down
+            for (int k = 0; k < boardWidth; k++) {
+                board[(j*boardWidth) + k] = colorAt(k, j - 1);
+            }
+        }
+    }
 
     /**
      * This method clears the board, setting all colors to black.

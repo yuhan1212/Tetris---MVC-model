@@ -11,6 +11,7 @@ public class Piece {
     }
 
     private Shapes shape;
+    private int lastUsed = 0;
     private int[][] coords;
     private Color color;
     private final Color[] colors;
@@ -120,9 +121,13 @@ public class Piece {
      */
     void setRandomShape() {
         Random r = new Random();
-        int x = Math.abs(r.nextInt()) % 7 + 1;
-
         Shapes[] values = Shapes.values();
+        int x = r.nextInt(values.length - 1) + 1;
+        while (x == lastUsed) {
+            x = r.nextInt(values.length - 1) + 1;
+        }
+        lastUsed = x;
+
         setShape(values[x]);
     }
 
@@ -133,7 +138,4 @@ public class Piece {
         return res;
     }
 
-    public static void main(String[] args) {
-        Piece piece = new Piece();
-    }
 }
