@@ -28,6 +28,9 @@ public class KeyBoardHandler implements KeyListener {
         } else if (keycode == 'p' || keycode == 'P') {
             controller.pause();
             return;
+        } else if (keycode == 'r' || keycode == 'R') {
+            controller.replay();
+            return;
         }
 
         if (!controller.isPaused()) {

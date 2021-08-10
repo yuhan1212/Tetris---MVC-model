@@ -99,7 +99,6 @@ public class Game {
     public void dropOneLine() {
         // if the  piece can't drop, it's reached the bottom/other pieces
         if (!tryMove(currentPiece, currentX, currentY + 1)) {
-            isFallingFinished = true;
             pieceDropped();
         }
     }
@@ -115,9 +114,9 @@ public class Game {
             board[(y * boardWidth) + x] = currentPiece.getColor();
         }
 
-        countFullLines();
-        isFallingFinished = false;
-        newPiece();
+        this.isFallingFinished = true;
+//        countFullLines();
+//        newPiece();
     }
 
     public int countFullLines() {
@@ -141,30 +140,32 @@ public class Game {
 
                     // moving all the lines above the full line one line down
                     for (int k = 0; k < boardWidth; k++) {
-                        System.out.printf("board coordinate: %d", j*boardWidth + k);
+//                        System.out.printf("board coordinate: %d", j*boardWidth + k);
                         board[(j*boardWidth) + k] = colorAt(k, j - 1);
                     }
                 }
+                i++;
             }
         }
-
-        if (numFullLines > 0) {
-            isFallingFinished = true;
-        }
+//
+//        if (numFullLines > 0) {
+//            isFallingFinished = true;
+//        }
+        newPiece();
         return numFullLines;
     }
 
-
-    public void removeFullLines(ArrayList<Integer> fullLines) {
-        // TODO: i has to iterate over board height to update the whole board, but also need to iterate over fullLines
-        for (int i = 0; i < boardHeight-1; i++) {
-
-            // moving all the lines above the full line one line down
-            for (int j = 0; j < boardWidth; j++) {
-                board[(fullLines.get(i) * boardWidth) + j] = colorAt(j, fullLines.get(i) - 1);
-            }
-        }
-    }
+//
+//    public void removeFullLines(ArrayList<Integer> fullLines) {
+//        // TODO: i has to iterate over board height to update the whole board, but also need to iterate over fullLines
+//        for (int i = 0; i < boardHeight-1; i++) {
+//
+//            // moving all the lines above the full line one line down
+//            for (int j = 0; j < boardWidth; j++) {
+//                board[(fullLines.get(i) * boardWidth) + j] = colorAt(j, fullLines.get(i) - 1);
+//            }
+//        }
+//    }
 
     /**
      * This method clears the board, setting all colors to black.

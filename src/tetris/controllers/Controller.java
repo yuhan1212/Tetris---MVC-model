@@ -33,7 +33,7 @@ public class Controller implements ActionListener {
      * Related to user input
      */
     private KeyBoardHandler keyBoardHandler;
-    private boolean isPaused = true;
+    private boolean isPaused;
 
     private SoundEffect BGM;
     private String BGMFileName = "Tetris.wav";
@@ -56,6 +56,7 @@ public class Controller implements ActionListener {
         timer = new Timer(timeDelay, this);
         BGM = new SoundEffect(BGMFileName, true);
         timer.start();
+        this.isPaused = true;
     }
 
     public void pause() {
@@ -70,6 +71,20 @@ public class Controller implements ActionListener {
         updateView();
         BGM.resume();
         timer.start();
+    }
+
+    public void replay() {
+        frame = new Frame(keyBoardHandler);
+        game = new Game();
+        game.newPiece();
+        timer = new Timer(timeDelay, this);
+        BGM = new SoundEffect(BGMFileName, true);
+        timer.start();
+        score = 0;
+        level = 1;
+        old_level = 1;
+        removedLines = 0;
+        isPaused = true;
     }
 
     public boolean isPaused() {
@@ -88,13 +103,11 @@ public class Controller implements ActionListener {
     }
 
     public void updateRecord() {
-        int AddRemoveLine = this.game.countFullLines();
-        this.removedLines += AddRemoveLine;
-        System.out.printf("this.removedLines: %d", this.removedLines);
-        this.score += AddRemoveLine * this.level * this.LevelRate;
-        System.out.printf("this.score: %d", this.score);
+        int addRemoveLine = this.game.countFullLines();
+        System.out.printf("addRemoveLine: %d\n", addRemoveLine);
+        this.removedLines += addRemoveLine;
+        this.score += addRemoveLine * this.level * this.LevelRate;
         this.level = 1 + this.removedLines / this.scoreToLevel;
-        System.out.printf("this.level: %d", this.level);
     }
 
     private boolean isLevelUp() {
@@ -108,10 +121,9 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // We reach here every time the alarm fires.
-
         // if not gameOver and not isPaused, we need to call models
         if (!this.game.isGameOver() && !this.isPaused()) {
-            System.out.printf("finishedFalling %b\n", this.game.isFallingFinished());
+//            System.out.printf("finishedFalling %b\n", this.game.isFallingFinished());
             // if current piece is settled
             if (this.game.isFallingFinished()) {
                 this.updateRecord(); // remove full line and update records
@@ -123,30 +135,24 @@ public class Controller implements ActionListener {
         }
         // keep update view, records and timer
         updateView();
-        updateRecord();
         if (this.isLevelUp()) {
 //            BGM.play(this.level);
         }
-        timer.setDelay(this.updateTimeDelay());
+//        timer.setDelay(this.updateTimeDelay());
 
     }
 
     public void move(Action action) {
         if (action == Action.LEFT) {
             game.moveLeft();
-//            System.out.println("move left");
         } else if (action == Action.RIGHT) {
             game.moveRight();
-//            System.out.println("move right");
         } else if (action == Action.ROTATE) {
             game.rotateLeft();
-//            System.out.println("rotate left");
         } else if (action == Action.DOWNONE) {
             game.dropOneLine();
-//            System.out.println("drop one");
         } else if (action == Action.ALLDOWN) {
             game.dropDown();
-//            System.out.println("drop down");
         }
         updateView();
     }

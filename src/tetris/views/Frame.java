@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Frame extends JFrame{
     private final int frameWidth = 300;
-    private final int frameHeight = 700;
+    private final int frameHeight = 721;
     private final int StatusBarBoarder = 10;
     private final String gameName = "Tetris";
     private Board board;

@@ -41,8 +41,8 @@ public class StatusAttributes {
 
         res += "Status: ";
         if (this.isPaused) {
-            res += "Paused</html>";
-        } else { res += "<html>Started, press 'p' to pause</html>";
+            res += "<html>Paused, <br />press 'p' to pause, 'r' to replay</html>";
+        } else { res += "<html>Started, <br />press 'p' to pause, 'r' to replay</html>";
         }
 
         return res;
