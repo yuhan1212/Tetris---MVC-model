@@ -66,12 +66,7 @@ public class Board extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (this.isGameOver) {
-            // just paint a "Game Over" string
-            g.setColor(Color.RED);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 24));
-            g.drawString("Game Over", 95, 300);
-        } else if (this.isPaused) {
+        if (this.isPaused) {
             g.setColor(Color.WHITE);
             g.drawString("Press 's' to start", 90, 300);
         } else if (board != null){
@@ -104,6 +99,16 @@ public class Board extends JPanel {
             for (i = this.gridLength; i < this.BOARDHEIGHT; i += this.gridLength) {
                 g.setColor(Color.GRAY);
                 g.drawLine(0, i, this.BOARDWIDTH, i);
+            }
+
+            if (this.isGameOver) {
+
+                // just paint a "Game Over" string
+                g.setColor(this.BOARDCOLOR);
+                g.fillRect(0, 0, BOARDWIDTH, BOARDHEIGHT);
+                g.setColor(Color.RED);
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 24));
+                g.drawString("Game Over", 95, 300);
             }
         }
     }

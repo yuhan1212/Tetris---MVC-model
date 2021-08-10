@@ -37,6 +37,7 @@ public class Controller implements ActionListener {
 
     private SoundEffect BGM;
     private String BGMFileName = "Tetris.wav";
+    private SoundEffect removeSoundEffect = new SoundEffect("remove.wav", true);
     private Timer timer;
     private int timeDelay = 1000;
     private int startTimeDelay = 1000;
@@ -107,6 +108,9 @@ public class Controller implements ActionListener {
         this.removedLines += addRemoveLine;
         this.score += addRemoveLine * this.level * this.LevelRate;
         this.level = 1 + this.removedLines / this.scoreToLevel;
+        if (addRemoveLine > 0) {
+            removeSoundEffect.play();
+        }
     }
 
     private boolean isLevelUp() {
