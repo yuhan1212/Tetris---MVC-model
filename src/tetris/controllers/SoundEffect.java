@@ -33,6 +33,9 @@ public class SoundEffect {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(this.fileName).getAbsoluteFile());
             this.clip = AudioSystem.getClip();
             clip.open(audioInputStream);
+            if (this.repeat) {
+                this.clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
             this.clip.start();
         }
         catch(Exception ex)
@@ -46,6 +49,7 @@ public class SoundEffect {
         this.clip.stop();
     }
 
+
     public void resume() {
         if (this.repeat) {
             this.clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -55,6 +59,12 @@ public class SoundEffect {
 
     public void restart() {
         this.play();
+        if (this.repeat) {
+            this.clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+        this.clip.stop();
     }
+
 }
+
 

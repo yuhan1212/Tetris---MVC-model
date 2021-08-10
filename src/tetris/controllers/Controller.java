@@ -33,6 +33,7 @@ public class Controller implements ActionListener {
     /**
      * Related to sounds and time
      */
+    private Boolean noSound = false;
     private SoundEffect BGM;
     private SoundEffect BGM10 = new SoundEffect("Tetris.wav", true);
     private SoundEffect BGM14 = new SoundEffect("Tetris14.wav", true);
@@ -80,17 +81,20 @@ public class Controller implements ActionListener {
     }
 
     public void replay() {
-        frame = new Frame(keyBoardHandler);
-        game = new Game();
-        game.newPiece();
-        timer = new Timer(timeDelay, this);
-        BGM.stop();
-        BGM = BGM10;
-        timer.start();
+        timer.stop();
         score = 0;
         level = 1;
         removedLines = 0;
+        this.timer.setDelay(startTimeDelay);
+        System.out.printf("newTimer: %d", startTimeDelay);
+        game = new Game();
+        game.newPiece();
+        BGM.stop();
+        BGM = BGM10;
+        BGM.restart();
+        timer.start();
         isPaused = true;
+        noSound = false;
     }
 
     public boolean isPaused() {
@@ -111,7 +115,7 @@ public class Controller implements ActionListener {
     public void updateRecord() {
         int addRemoveLine = this.game.countFullLines();
         this.removedLines += addRemoveLine;
-        this.score += addRemoveLine * this.oneLinePoints + (this.level -1) * levelExtra;
+        this.score += addRemoveLine * (this.oneLinePoints + (this.level -1) * levelExtra);
         this.level = 1 + this.score / this.upGrade; // level is total score / 300
         if (addRemoveLine > 0) {
             removeSoundEffect.play();
@@ -156,10 +160,11 @@ public class Controller implements ActionListener {
             this.updateBGM();
         }
 
-        if (this.game.isGameOver()) {
+        if (this.game.isGameOver() && !noSound) {
             timer.stop();
             BGM.stop();
             gameOverSoundEffect.play();
+            noSound = true;
         }
 
     }
@@ -184,7 +189,6 @@ public class Controller implements ActionListener {
             return minTimeDelay;
         }
         this.timeDelay = startTimeDelay - score / upGrade * upGrade;
-        System.out.println(timeDelay);
         return this.timeDelay;
     }
 

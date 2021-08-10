@@ -68,7 +68,7 @@ public class Board extends JPanel {
 
         if (this.isPaused) {
             g.setColor(Color.WHITE);
-            g.drawString("Press 's' to start", 90, 300);
+            g.drawString("Press S to start", 90, 300);
         } else if (board != null){
 
             // paint base board

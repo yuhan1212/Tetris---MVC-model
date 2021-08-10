@@ -28,21 +28,21 @@ public class StatusAttributes {
     public String fitLabel() {
         String res = "";
         if (this.isGameOver) {
-            res += String.format("<html>Score: %d<br />", this.score);
-            res += String.format("Level: %d<br />", this.level);
-            res += String.format("Lined: %d</html>", this.removedLines);
-            res += "Press 's' to start a new game.";
+            res += String.format("<html>Score:   %d<br />", this.score);
+            res += String.format("Level:   %d<br />", this.level);
+            res += String.format("Lined:   %d<br />", this.removedLines);
+            res += "Press <b>R</b> to start a new game.</html>";
             return res;
         }
 
-        res += String.format("<html>Score: %d<br />", this.score);
-        res += String.format("Level: %d<br />", this.level);
-        res += String.format("Lines: %d<br />", this.removedLines);
+        res += String.format("<html>Score:   %d<br />", this.score);
+        res += String.format("Level:   %d<br />", this.level);
+        res += String.format("Lines:   %d<br />", this.removedLines);
 
         res += "Status: ";
         if (this.isPaused) {
-            res += "<html>Paused, <br />press 'p' to pause, 'r' to replay</html>";
-        } else { res += "<html>Started, <br />press 'p' to pause, 'r' to replay</html>";
+            res += "<html>PAUSE <br />Press <b>P</b> to pause, <b>R</b> to replay</html>";
+        } else { res += "<html>START <br />Press <b>P</b> to pause, <b>R</b> to replay</html>";
         }
 
         return res;
