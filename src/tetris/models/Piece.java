@@ -120,9 +120,9 @@ public class Piece {
      */
     void setRandomShape() {
         Random r = new Random();
-        int x = Math.abs(r.nextInt()) % 7 + 1;
-
         Shapes[] values = Shapes.values();
+        int x = r.nextInt(values.length) % 7 + 1;
+
         setShape(values[x]);
     }
 
