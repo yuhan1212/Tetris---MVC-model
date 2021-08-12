@@ -3,9 +3,9 @@ package tetris.controllers;
 import tetris.models.Game;
 import tetris.views.Frame;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
 
 /**
@@ -167,7 +167,6 @@ public class Controller implements ActionListener {
             gameOverSoundEffect.play();
             noSound = true;
         }
-        System.out.println(timeDelay);
     }
 
     public void move(Action action) {
