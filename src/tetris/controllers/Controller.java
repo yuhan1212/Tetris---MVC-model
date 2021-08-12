@@ -41,7 +41,7 @@ public class Controller implements ActionListener {
     private SoundEffect removeSoundEffect = new SoundEffect("remove.wav", false);
     private SoundEffect gameOverSoundEffect = new SoundEffect("gameover.wav", false);
     private Timer timer;
-    private int timeDelay = 1000;
+    private int timeDelay;
     private int startTimeDelay = 1000;
     private int minTimeDelay = 200;
 
@@ -60,6 +60,7 @@ public class Controller implements ActionListener {
         frame = new Frame(keyBoardHandler);
         game = new Game();
         game.newPiece();
+        timeDelay = startTimeDelay;
         timer = new Timer(timeDelay, this);
         timer.start();
         this.BGM = this.BGM10;
@@ -85,16 +86,16 @@ public class Controller implements ActionListener {
         score = 0;
         level = 1;
         removedLines = 0;
-        this.timer.setDelay(startTimeDelay);
-        System.out.printf("newTimer: %d", startTimeDelay);
+        timeDelay = startTimeDelay;
+        timer.setDelay(timeDelay);
         game = new Game();
         game.newPiece();
         BGM.stop();
         BGM = BGM10;
         BGM.restart();
-        timer.start();
         isPaused = true;
         noSound = false;
+        timer.start();
     }
 
     public boolean isPaused() {
@@ -154,7 +155,7 @@ public class Controller implements ActionListener {
         updateView();
 
         int oldTimeDelay = this.timeDelay;
-        timer.setDelay(this.updateTimeDelay());
+        timer.setDelay(updateTimeDelay());
 
         if (this.timeDelay < oldTimeDelay) {
             this.updateBGM();
@@ -166,7 +167,7 @@ public class Controller implements ActionListener {
             gameOverSoundEffect.play();
             noSound = true;
         }
-
+        System.out.println(timeDelay);
     }
 
     public void move(Action action) {
@@ -188,8 +189,8 @@ public class Controller implements ActionListener {
         if (this.timeDelay <= minTimeDelay) {
             return minTimeDelay;
         }
-        this.timeDelay = startTimeDelay - score / upGrade * upGrade;
-        return this.timeDelay;
+        timeDelay = startTimeDelay - score / upGrade * upGrade;
+        return timeDelay;
     }
 
     public static void main(String[] args) {
