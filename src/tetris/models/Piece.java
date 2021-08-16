@@ -22,7 +22,7 @@ public class Piece {
      * and create a new non-shaped piece on top of the panel.
      */
     public Piece() {
-        // a piece will take up maximum 4*2 rectangle
+        // a piece will have 4 coordinates, one for each square
         coords = new int[4][2];
         colors = new Color[8];
         colors[0] = Color.BLACK;
@@ -47,7 +47,7 @@ public class Piece {
     }
 
     /**
-     * This methods set the shape of the non-shaped piece.
+     * This method sets the shape of the non-shaped piece.
      */
     public void setShape(Shapes shape) {
         for (int i = 0; i < 4; i++) {

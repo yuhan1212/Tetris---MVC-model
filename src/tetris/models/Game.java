@@ -16,7 +16,7 @@ public class Game {
     private int currentX = 0;
     private int currentY = 0;
     private Piece currentPiece;
-    private Color[] board;
+    private final Color[] board;
 
 
     /**
