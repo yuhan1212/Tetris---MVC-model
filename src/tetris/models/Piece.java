@@ -32,7 +32,7 @@ public class Piece {
         colors[4] = Color.GREEN;
         colors[5] = Color.BLUE;
         colors[6] = Color.CYAN;
-        colors[7] = Color.MAGENTA;
+        colors[7] = new Color(102, 0 , 153);
         coordsTable = new int[][][]{
                 {{0, 0}, {0, 0}, {0, 0}, {0, 0}}, // NoShape
                 {{-1, 1}, {0, 1}, {0, 0}, {1, 0}}, // ZShape
