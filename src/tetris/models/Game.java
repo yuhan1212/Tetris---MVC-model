@@ -284,9 +284,4 @@ public class Game {
         return result;
     }
 
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.newPiece();
-        System.out.println(game);
-    }
 }

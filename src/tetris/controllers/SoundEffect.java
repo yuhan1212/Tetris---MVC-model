@@ -14,22 +14,18 @@ public class SoundEffect {
     public SoundEffect(String fileName, boolean repeat) {
         this.fileName = fileName;
         this.repeat = repeat;
-        try
-        {
+        try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(this.fileName).getAbsoluteFile());
             this.clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-        }
-        catch(Exception ex)
-        {
+        } catch(Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
         }
     }
 
     public void play() {
-        try
-        {
+        try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(this.fileName).getAbsoluteFile());
             this.clip = AudioSystem.getClip();
             clip.open(audioInputStream);
@@ -37,9 +33,7 @@ public class SoundEffect {
                 this.clip.loop(Clip.LOOP_CONTINUOUSLY);
             }
             this.clip.start();
-        }
-        catch(Exception ex)
-        {
+        } catch(Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
         }

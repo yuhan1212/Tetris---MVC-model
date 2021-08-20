@@ -35,11 +35,11 @@ public class Controller implements ActionListener {
      */
     private Boolean noSound = false;
     private SoundEffect BGM;
-    private SoundEffect BGM10 = new SoundEffect("Tetris.wav", true);
-    private SoundEffect BGM14 = new SoundEffect("Tetris14.wav", true);
-    private SoundEffect BGM16 = new SoundEffect("Tetris16.wav", true);
-    private SoundEffect removeSoundEffect = new SoundEffect("remove.wav", false);
-    private SoundEffect gameOverSoundEffect = new SoundEffect("gameover.wav", false);
+    private SoundEffect BGM10 = new SoundEffect("Final Project/SoundEffects/Tetris.wav", true);
+    private SoundEffect BGM14 = new SoundEffect("Final Project/SoundEffects/Tetris14.wav", true);
+    private SoundEffect BGM16 = new SoundEffect("Final Project/SoundEffects/Tetris16.wav", true);
+    private SoundEffect removeSoundEffect = new SoundEffect("Final Project/SoundEffects/remove.wav", false);
+    private SoundEffect gameOverSoundEffect = new SoundEffect("Final Project/SoundEffects/gameover.wav", false);
     private Timer timer;
     private int timeDelay;
     private int startTimeDelay = 1000;
@@ -144,8 +144,7 @@ public class Controller implements ActionListener {
             // if current piece is settled
             if (this.game.isFallingFinished()) {
                 this.updateRecord(); // remove full line and update records
-            }
-            else {
+            } else {
                 // keep move current piece one line down
                 this.move(Action.DOWNONE);
             }
@@ -195,6 +194,5 @@ public class Controller implements ActionListener {
     public static void main(String[] args) {
         Controller c = new Controller();
     }
-
 
 }
