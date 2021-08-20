@@ -6,9 +6,9 @@ import java.awt.event.KeyListener;
 public class KeyBoardHandler implements KeyListener {
 
     private final Controller controller;
-    private final String moveSoundFileName = "Final Project/SoundEffects/move.wav";
+    private final String moveSoundFileName = "move.wav";
     private final SoundEffect moveSoundEffect;
-    private final String dropSoundFileName = "Final Project/SoundEffects/drop.wav";
+    private final String dropSoundFileName = "drop.wav";
     private final SoundEffect dropSoundEffect;
 
     public KeyBoardHandler(Controller controller) {
